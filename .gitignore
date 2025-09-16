@@ -1,0 +1,107 @@
+# -----------------------------
+# OS / Editor cruft
+# -----------------------------
+# macOS
+.DS_Store
+.AppleDouble
+.Spotlight-V100
+.Trashes
+Icon?
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+# Linux
+*~
+
+# Vim/Emacs/JetBrains/VS Code
+*.swp
+*.swo
+*.un~
+.idea/
+*.iml
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/settings.json
+!.vscode/tasks.json
+
+# -----------------------------
+# Logs & temp
+# -----------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.tmp
+*.temp
+tmp/
+.cache/
+
+# -----------------------------
+# Environment & secrets
+# -----------------------------
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*.crt
+*.p12
+*.keystore
+*.jks
+.aws/
+
+# -----------------------------
+# Node / Frontend
+# -----------------------------
+node_modules/
+dist/
+build/
+coverage/
+.lerna/
+.pnp*
+.parcel-cache/
+.vite/
+.next/
+out/
+.nuxt/
+.svelte-kit/
+.storybook-out/
+storybook-static/
+*.tsbuildinfo
+web_modules/
+
+
+# -----------------------------
+# Docker
+# -----------------------------
+.docker/
+docker-data/
+*.pid
+
+# -----------------------------
+# Databases / data
+# -----------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.mdb
+*.accdb
+*.rdb
+*.dump
+
+# -----------------------------
+# Terraform
+# -----------------------------
+.terraform/
+terraform.tfstate
+terraform.tfstate.*
+crash.log
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
