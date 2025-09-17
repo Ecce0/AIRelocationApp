@@ -105,3 +105,9 @@ crash.log
 *.tfvars.json
 override.tf
 override.tf.json
+Terraform/build/
+
+# -----------------------------
+# Misc.
+# -----------------------------
+Backend/**/node_modules
