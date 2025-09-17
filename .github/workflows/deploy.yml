@@ -1,18 +1,13 @@
-name: Relo-AI-App Dev Plan
+name: Relo-AI-App CI/CD
 
 on:
   push:
-    branches: [ "dev" ]
-    paths:
-      - 'Backend/**'
-      - '**.tf'
-      - 'package.json'
-      - 'package-lock.json'
+    branches: [ "main", "dev" ]
+  workflow_dispatch:
 
 jobs:
-  plan-dev:
+  build-and-deploy:
     runs-on: ubuntu-latest
-    environment: dev
 
     steps:
       - name: Checkout code
@@ -28,7 +23,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # Lambda bundles placeholder (for later)
+      # Placeholder for Lambda bundles (later)
       # - name: Build
       #   run: npm run build
 
@@ -42,6 +37,10 @@ jobs:
 
       - name: Terraform Plan
         run: terraform plan -out=tfplan
+
+      - name: Terraform Apply (main only)
+        if: github.ref == 'refs/heads/main'
+        run: terraform apply -auto-approve tfplan
 
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
