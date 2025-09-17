@@ -1,7 +1,7 @@
 # Zip the Lambda code from Backend/ automatically
 data "archive_file" "ping_zip" {
   type        = "zip"
-  source_dir  = "${path.root}/../Backend/ping" 
+  source_dir  = "${path.root}/../backend/ping" 
   output_path = "${path.module}/build/ping.zip"
 }
 
@@ -32,7 +32,7 @@ resource "aws_lambda_function" "ping" {
 # COL Lambda
 data "archive_file" "col_zip" {
   type        = "zip"
-  source_dir  = "${path.root}/../Backend/cost_of_living"
+  source_dir  = "${path.root}/../backend/cost_of_living"
   output_path = "${path.module}/build/cost_of_living.zip"
 }
 resource "aws_lambda_function" "cost_of_living" {
@@ -47,7 +47,7 @@ resource "aws_lambda_function" "cost_of_living" {
 # Salary Lambda
 data "archive_file" "salary_zip" {
   type        = "zip"
-  source_dir  = "${path.root}/../Backend/salary"
+  source_dir  = "${path.root}/../backend/salary"
   output_path = "${path.module}/build/salary.zip"
 }
 resource "aws_lambda_function" "salary" {
@@ -62,7 +62,7 @@ resource "aws_lambda_function" "salary" {
 # Metrics Lambda
 data "archive_file" "metrics_zip" {
   type        = "zip"
-  source_dir  = "${path.root}/../Backend/metrics"
+  source_dir  = "${path.root}/../backend/metrics"
   output_path = "${path.module}/build/metrics.zip"
 }
 resource "aws_lambda_function" "metrics" {
@@ -77,7 +77,7 @@ resource "aws_lambda_function" "metrics" {
 # Auth Lambda
 data "archive_file" "auth_zip" {
   type        = "zip"
-  source_dir  = "${path.root}/../Backend/shared/auth"
+  source_dir  = "${path.root}/../backend/shared/auth"
   output_path = "${path.module}/build/auth.zip"
 }
 resource "aws_lambda_function" "auth" {
