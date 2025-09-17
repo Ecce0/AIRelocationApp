@@ -2,7 +2,7 @@ name: Relo-AI-App Dev Plan
 
 on:
   push:
-    branches: ['dev']
+    branches: [ "dev" ]
     paths:
       - 'Backend/**'
       - '**.tf'
