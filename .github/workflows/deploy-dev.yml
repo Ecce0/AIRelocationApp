@@ -2,7 +2,7 @@ name: Relo-AI-App Dev Plan
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: ['dev']
     paths:
       - 'Backend/**'
       - '**.tf'
@@ -22,8 +22,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: 'npm'
-          cache-dependency-path: 'Backend/**/package-lock.json'
+          cache: npm
+          cache-dependency-path: Backend/**/package-lock.json
 
       - name: Install dependencies
         run: npm ci
