@@ -111,5 +111,3 @@ Terraform/build/
 # Misc.
 # -----------------------------
 Backend/**/node_modules
-
-

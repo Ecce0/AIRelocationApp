@@ -1,5 +1,5 @@
-const ping = async (event) => {
-  console.log('ping event:', event)
+const ping = async (e) => {
+  console.log('ping successful:', e)
   return {
     statusCode: 200,
     headers: { 'content-type': 'application/json' },
