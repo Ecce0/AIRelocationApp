@@ -8,4 +8,4 @@ const costOfLiving = async (event) => {
     }),
   }
 }
-module.exports.costOfLiving = costOfLiving
+export default costOfLiving

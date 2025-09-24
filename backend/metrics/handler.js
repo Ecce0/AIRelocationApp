@@ -7,4 +7,4 @@ const metrics = async (event) => {
     }),
   }
 }
-module.exports.metrics = metrics
+export default metrics

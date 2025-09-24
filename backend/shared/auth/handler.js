@@ -7,4 +7,4 @@ const auth = async (event) => {
     }),
   }
 }
-module.exports.auth = auth
+export default auth

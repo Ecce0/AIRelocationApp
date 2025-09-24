@@ -7,4 +7,4 @@ const ping = async (e) => {
   }
 }
 
-module.exports.ping = ping
+export default ping
