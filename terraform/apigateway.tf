@@ -70,7 +70,7 @@ resource "aws_apigatewayv2_integration" "col_integration" {
 
 resource "aws_apigatewayv2_route" "col_route" {
   api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "GET /cost-of-living"
+  route_key = "POST /cost-of-living"
   target    = "integrations/${aws_apigatewayv2_integration.col_integration.id}"
 }
 
@@ -93,7 +93,7 @@ resource "aws_apigatewayv2_integration" "metrics_integration" {
 
 resource "aws_apigatewayv2_route" "metrics_route" {
   api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "GET /metrics"
+  route_key = "POST /metrics"
   target    = "integrations/${aws_apigatewayv2_integration.metrics_integration.id}"
 }
 

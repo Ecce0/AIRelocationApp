@@ -11,9 +11,12 @@
     "tf:val": "cd Terraform && terraform validate",
     "tf:plan": "cd Terraform && terraform plan",
     "tf:apply": "cd Terraform && terraform apply",
-    "tf:destroy": "cd Terraform && terraform destroy"
+    "tf:destroy": "cd Terraform && terraform destroy",
+    "tf:quick": "cd Terraform && terraform init && terraform apply --auto-approve",
+    "build:lambdas": "node ./scripts/build-lambdas.js"
   },
   "dependencies": {
+    "@aws-sdk/client-ssm": "^3.895.0",
     "aws-sdk": "^2.1692.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
@@ -21,6 +24,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
+    "esbuild": "^0.25.10",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.0",

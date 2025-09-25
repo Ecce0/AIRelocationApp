@@ -2,7 +2,7 @@ name: Relo-AI-App CI/CD
 
 on:
   push:
-    branches: [ "main", "dev" ]
+    branches: ['main', 'dev']
   workflow_dispatch:
 
 jobs:
@@ -44,7 +44,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: terraform apply -auto-approve tfplan
         working-directory: terraform
-
 
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
