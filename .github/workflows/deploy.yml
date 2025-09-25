@@ -24,11 +24,7 @@ jobs:
         run: npm ci
 
       - name: Build Lambdas
-        run: |
-          npm run build
-          cd backend
-          npm ci
-          npm run build
+        run: npm run build:lambdas
         
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
