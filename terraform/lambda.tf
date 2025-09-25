@@ -90,7 +90,7 @@ resource "aws_lambda_function" "metrics" {
 # Auth Lambda
 data "archive_file" "auth_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../Backend/shared/auth"
+  source_dir  = "${path.module}/../backend/shared/auth"
   output_path = "${path.module}/../dist/auth.zip"
 }
 
