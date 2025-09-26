@@ -1,57 +1,58 @@
-import { getApiKey } from '../shared/utils.mjs';
-
+import { getSSMParam } from '../shared/utils.mjs';
 
 const salary = async (event) => {
-const { location , job_title } = event.queryStringParameters || {};
+  const { location, job_title } = event.queryStringParameters || {};
 
   if (!location || !job_title) {
     return {
       statusCode: 400,
-      body: JSON.stringify({
-        error: 'You must add a job AND a city',
-      }),
+      body: JSON.stringify({ error: 'You must add a job AND a city' }),
     };
   }
 
-  const apiKey = await getApiKey();
-  if (!apiKey) {
+  // Fetch API key + URL from SSM
+  const apiKey = await getSSMParam('openwebninja_api_key');
+  const apiUrl = await getSSMParam('openwebninja_api_url');
+
+  if (!apiKey || !apiUrl) {
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: 'API key missing',
-      }),
+      body: JSON.stringify({ error: 'API key or URL missing' }),
     };
   }
 
- const url = `https://api.openwebninja.com/job-salary-data/job-salary?job_title=${encodeURIComponent(
-  job_title
-)}&location=${encodeURIComponent(location)}`;
-
+  // Build URL
+  const url = `${apiUrl}?job_title=${encodeURIComponent(job_title)}&location=${encodeURIComponent(location)}`;
 
   const response = await fetch(url, {
     headers: { 'x-api-key': apiKey },
   });
 
+  // Handle errors early
   if (response.status !== 200) {
+    const errorText = await response.text(); // <-- safe for debugging
     return {
       statusCode: response.status,
       body: JSON.stringify({
         error: 'upstream failed',
-        msg: response.data,
+        msg: errorText,
       }),
     };
   }
 
-const { data } = await response.json();
-const results = data.map(({ job_title, location }) => ({
-  job: job_title,
-  city: location,
-}));
+  // Parse data
+  const { data } = await response.json();
 
-return {
-  statusCode: 200,
-  body: JSON.stringify({ data: results }),
+  // Shape into simpler structure
+  const results = data.map(({ job_title, location }) => ({
+    job: job_title,
+    city: location,
+  }));
+
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ data: results }),
+  };
 };
-}
 
 export default salary;

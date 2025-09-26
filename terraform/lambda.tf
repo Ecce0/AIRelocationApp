@@ -36,6 +36,7 @@ data "archive_file" "col_zip" {
   output_path = "${path.module}/../dist/cost_of_living.zip"
 }
 
+# Cost-of-Living Lambda
 resource "aws_lambda_function" "cost_of_living" {
   function_name    = "relo-ai-app-cost-of-living"
   role             = aws_iam_role.lambda_role_auth.arn
@@ -44,6 +45,13 @@ resource "aws_lambda_function" "cost_of_living" {
   filename         = data.archive_file.col_zip.output_path
   source_code_hash = data.archive_file.col_zip.output_base64sha256
   timeout          = 30
+
+  environment {
+    variables = {
+      ZYLA_KEY = "zyla_api_key"
+      ZYLA_URL = "zyla_api_url"
+    }
+  }
 }
 
 # Salary Lambda
@@ -53,6 +61,7 @@ data "archive_file" "salary_zip" {
   output_path = "${path.module}/../dist/salary.zip"
 }
 
+# Salary Lambda
 resource "aws_lambda_function" "salary" {
   function_name    = "relo-ai-app-salary"
   role             = aws_iam_role.lambda_role_auth.arn
@@ -64,7 +73,8 @@ resource "aws_lambda_function" "salary" {
 
   environment {
     variables = {
-      OPENWEBNINJA_PARAM = "/relo-ai-app/openwebninja_api_key"
+      OPENWEBNINJA_KEY = "openwebninja_api_key"
+      OPENWEBNINJA_URL = "openwebninja_api_url"
     }
   }
 }
@@ -85,6 +95,12 @@ resource "aws_lambda_function" "metrics" {
   filename         = data.archive_file.metrics_zip.output_path
   source_code_hash = data.archive_file.metrics_zip.output_base64sha256
   timeout          = 30
+
+  environment {
+    variables = {
+      CACHE_TABLE = aws_dynamodb_table.relo_ai_app_cache.name
+    }
+  }
 }
 
 # Auth Lambda

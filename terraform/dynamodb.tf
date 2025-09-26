@@ -46,3 +46,30 @@ resource "aws_dynamodb_table" "job_salaries" {
   }
 }
 
+// ======= Cache Table ========
+resource "aws_dynamodb_table" "relo_ai_app_cache" {
+  name         = "relo-ai-app-cache"
+  billing_mode = "PAY_PER_REQUEST" 
+  hash_key     = "city"
+  range_key    = "metric"
+
+  attribute {
+    name = "city"
+    type = "S"
+  }
+
+  attribute {
+    name = "metric"
+    type = "S"
+  }
+
+  ttl {
+    attribute_name = "ttl"
+    enabled        = true
+  }
+
+  tags = {
+    Project = "relo-ai-app"
+    Env     = "dev"
+  }
+}

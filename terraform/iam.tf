@@ -73,11 +73,14 @@ resource "aws_iam_role_policy_attachment" "lambda_dynamodb_attach" {
 #API Lambda read access for secure parameter key
 data "aws_iam_policy_document" "lambda_ssm_access" {
   statement {
-    sid     = "ReadOpenWebNinjaKey"
+    sid     = "ReadAllReloParams"
     effect  = "Allow"
-    actions = ["ssm:GetParameter"]
+    actions = [
+      "ssm:GetParameter",
+      "ssm:GetParameters"
+    ]
     resources = [
-      "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/relo-ai-app/openwebninja_api_key"
+      "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/relo-ai-app/*"
     ]
   }
 }
@@ -93,3 +96,31 @@ resource "aws_iam_role_policy_attachment" "lambda_ssm_attach" {
 }
 
 data "aws_caller_identity" "current" {}
+
+
+# Lambdas ---> DynamoDB Cache Table Access
+resource "aws_iam_role_policy" "lambda_cache_access" {
+  name = "relo-ai-app-cache-policy"
+  role = aws_iam_role.lambda_role_auth.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "dynamodb:GetItem",
+          "dynamodb:PutItem",
+          "dynamodb:UpdateItem",
+          "dynamodb:DeleteItem",
+          "dynamodb:Query",
+          "dynamodb:Scan"
+        ]
+        Resource = [
+          aws_dynamodb_table.relo_ai_app_cache.arn,
+          "${aws_dynamodb_table.relo_ai_app_cache.arn}/index/*"
+        ]
+      }
+    ]
+  })
+}
