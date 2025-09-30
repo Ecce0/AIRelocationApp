@@ -22,6 +22,8 @@ resource "aws_dynamodb_table" "relocation_metrics" {
   }
 }
 
+
+
 # === Job Salaries Table ===
 resource "aws_dynamodb_table" "job_salaries" {
   name         = "job_salaries"
@@ -63,9 +65,22 @@ resource "aws_dynamodb_table" "relo_ai_app_cache" {
     type = "S"
   }
 
-  ttl {
-    attribute_name = "ttl"
-    enabled        = true
+  tags = {
+    Project = "relo-ai-app"
+    Env     = "dev"
+  }
+}
+
+
+// ======= Cost of Living Cache Table ======
+resource "aws_dynamodb_table" "cost_of_living_cache" {
+  name         = "relo-ai-app-cost-of-living-cache"
+  billing_mode = "PAY_PER_REQUEST"
+  hash_key     = "city"
+
+  attribute {
+    name = "city"
+    type = "S"
   }
 
   tags = {
