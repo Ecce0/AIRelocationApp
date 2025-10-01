@@ -1,5 +1,5 @@
 import { getSSMParam } from '../shared/utils.mjs'
-import { getFromCache, saveToCache } from '../shared/dynamodbCache.mjs'
+import { getFromCache, saveToCache } from '../shared/dynamoDbCache.mjs'
 
 const costOfLiving = async (event) => {
   const { ZYLA_KEY, ZYLA_URL, CACHE_TABLE } = process.env
