@@ -1,11 +1,9 @@
-# Zip the Lambda code from Backend/ automatically
+// === Ping Lambda ===
 data "archive_file" "ping_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../dist/ping"
   output_path = "${path.module}/../dist/ping.zip"
 }
-
-
 
 resource "aws_lambda_function" "ping" {
   function_name    = "relo-ai-app-ping"
@@ -28,15 +26,13 @@ resource "aws_lambda_function" "ping" {
   }
 }
 
-
-# COL Lambda
+// === Cost of Living Lambda ===
 data "archive_file" "col_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../dist/cost_of_living"
   output_path = "${path.module}/../dist/cost_of_living.zip"
 }
 
-# Cost-of-Living Lambda
 resource "aws_lambda_function" "cost_of_living" {
   function_name    = "relo-ai-app-cost-of-living"
   role             = aws_iam_role.lambda_role_auth.arn
@@ -50,18 +46,18 @@ resource "aws_lambda_function" "cost_of_living" {
     variables = {
       ZYLA_KEY = "zyla_api_key"
       ZYLA_URL = "zyla_api_url"
+      CACHE_TABLE = aws_dynamodb_table.cost_of_living_cache.name
     }
   }
 }
 
-# Salary Lambda
+// === Salary Lambda ===
 data "archive_file" "salary_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../dist/salary"
   output_path = "${path.module}/../dist/salary.zip"
 }
 
-# Salary Lambda
 resource "aws_lambda_function" "salary" {
   function_name    = "relo-ai-app-salary"
   role             = aws_iam_role.lambda_role_auth.arn
@@ -75,12 +71,12 @@ resource "aws_lambda_function" "salary" {
     variables = {
       OPENWEBNINJA_KEY = "openwebninja_api_key"
       OPENWEBNINJA_URL = "openwebninja_api_url"
+      CACHE_TABLE = aws_dynamodb_table.job_salaries.name
     }
   }
 }
 
-
-# Metrics Lambda
+// === Metrics Lambda ===
 data "archive_file" "metrics_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../dist/metrics"
@@ -103,7 +99,7 @@ resource "aws_lambda_function" "metrics" {
   }
 }
 
-# Auth Lambda
+// === Auth Lambda ===
 data "archive_file" "auth_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../backend/shared/auth"

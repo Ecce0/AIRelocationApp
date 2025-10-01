@@ -1,8 +1,8 @@
 import { getSSMParam } from '../shared/utils.mjs'
+import { getFromCache, saveToCache } from '../shared/dynamodbCache.mjs'
 
 const costOfLiving = async (event) => {
-  const { ZYLA_KEY, ZYLA_URL } = process.env
-
+  const { ZYLA_KEY, ZYLA_URL, CACHE_TABLE } = process.env
   const { city } = event.queryStringParameters || {}
 
   if (!city) {
@@ -12,8 +12,20 @@ const costOfLiving = async (event) => {
     }
   }
 
-  const apiKey = await getSSMParam(process.env.ZYLA_KEY)
-  const apiUrl = await getSSMParam(process.env.ZYLA_URL)
+  // 1. Try cache
+  const cached = await getFromCache(CACHE_TABLE, { city })
+  if (cached) {
+    console.log('Cache hit:', cached)
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ source: 'cache', data: cached }),
+    }
+  }
+
+  // 2. Fetch API config
+  const apiKey = await getSSMParam(ZYLA_KEY)
+  const apiUrl = await getSSMParam(ZYLA_URL)
 
   if (!apiKey || !apiUrl) {
     return {
@@ -22,8 +34,8 @@ const costOfLiving = async (event) => {
     }
   }
 
+  // 3. Call external API
   const url = `${apiUrl}?city=${encodeURIComponent(city)}`
-
   const response = await fetch(url, {
     headers: { Authorization: `Bearer ${apiKey}` },
   })
@@ -53,10 +65,13 @@ const costOfLiving = async (event) => {
       ],
   }
 
+  // Save to cache
+  await saveToCache(CACHE_TABLE, payload)
+
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
+    body: JSON.stringify({ source: 'api', data: payload }),
   }
 }
 
