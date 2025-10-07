@@ -54,9 +54,11 @@ const salary = async (event) => {
 
   const { data } = await response.json()
 
-  const results = data.map(({ job_title, location }) => ({
+  const results = data.map(({ job_title, location, median_salary, salaries_updated_at }) => ({
     job: job_title,
     city: location,
+    average_salary: median_salary,
+    last_updated: salaries_updated_at
   }))
 
   // 4. Save results
@@ -66,7 +68,7 @@ const salary = async (event) => {
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ source: 'api', data: results }),
+    body: JSON.stringify({ data: results }),
   }
 }
 

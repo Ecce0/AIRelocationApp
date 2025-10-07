@@ -1,35 +1,43 @@
 import { getFromCache, saveToCache } from '../shared/dynamoDbCache.mjs'
 
 const handler = async (event) => {
-  const city = event.queryStringParameters?.city || 'Washington DC'
-  const metric = event.queryStringParameters?.metric || 'housing'
-  const tableName = process.env.CACHE_TABLE
+const trimSpace = (str = '') => str.replace(/\s+/g, ' ').trim()
+const body = JSON.parse(event.body || '{}')
+const city = trimSpace(body.city) || 'Washington, DC'
+const job = trimSpace(body.job) || 'Cloud Engineer'
 
-  // Try cache
-  const cached = await getFromCache(tableName, { city, metric })
-  if (cached) {
-    console.log('Cache hit:', cached)
+
+  const colTable = process.env.COL_TABLE
+  const salaryTable = process.env.SALARY_TABLE
+
+
+  const colData = await getFromCache(colTable, { city })
+  const salaryData = await getFromCache(salaryTable, { job, city })
+
+  if (!colData || !salaryData) {
     return {
-      statusCode: 200,
-      body: JSON.stringify({ source: 'cache', data: cached }),
+      statusCode: 404,
+      body: JSON.stringify({ error: 'Data not found for this city/job' }),
     }
   }
 
-  // If miss, call external API
-  const apiResponse = await fetchExternalMetric(city, metric)
+  const costData = JSON.parse(colData.data)
 
-  // Save result to cache
-  await saveToCache(tableName, { city, metric, value: apiResponse.value })
+  const affordability =
+    parseFloat(salaryData.average_salary) /
+    parseFloat(costData.avg_monthly_net_salary || 1)
 
   return {
     statusCode: 200,
-    body: JSON.stringify({ source: 'api', data: apiResponse }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      city,
+      job,
+      salary: salaryData.average_salary,
+      costOfLiving: costData,
+      affordability,
+    }),
   }
-}
-
-// Example stub
-const fetchExternalMetric = async (city, metric) => {
-  return { value: `${metric} data for ${city}` }
 }
 
 export default handler

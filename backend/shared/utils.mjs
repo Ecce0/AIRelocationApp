@@ -1,9 +1,7 @@
 import { SSMClient, GetParameterCommand } from '@aws-sdk/client-ssm'
-import { fromIni } from '@aws-sdk/credential-provider-ini'
 
 const ssm = new SSMClient({
-  region: process.env.AWS_REGION || 'us-east-1',
-  credentials: fromIni({ profile: 'erica-admin' }),
+  region: process.env.AWS_REGION || 'us-east-1'
 })
 
 export const getSSMParam = async (paramKey) => {
