@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="text-center py-4 text-sm text-gray-400 border-t border-gray-700 mt-8">
       <p>
-        © {new Date().getFullYear()} Relo.AI.App — built by Erica Collier ·{" "}
+        © {new Date().getFullYear()} Relo.AI.App — built by Erica Collier ·{' '}
         <a
           href="https://github.com/Ecce0/AIRelocationApp"
           target="_blank"
@@ -13,7 +13,7 @@ const Footer = () => {
         </a>
       </p>
     </footer>
-  );
+  )
 }
 
 export default Footer

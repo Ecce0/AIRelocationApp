@@ -1,15 +1,13 @@
 import { getFromCache, saveToCache } from '../shared/dynamoDbCache.mjs'
 
 const handler = async (event) => {
-const trimSpace = (str = '') => str.replace(/\s+/g, ' ').trim()
-const body = JSON.parse(event.body || '{}')
-const city = trimSpace(body.city) || 'Washington, DC'
-const job = trimSpace(body.job) || 'Cloud Engineer'
-
+  const trimSpace = (str = '') => str.replace(/\s+/g, ' ').trim()
+  const body = JSON.parse(event.body || '{}')
+  const city = trimSpace(body.city) || 'Washington, DC'
+  const job = trimSpace(body.job) || 'Cloud Engineer'
 
   const colTable = process.env.COL_TABLE
   const salaryTable = process.env.SALARY_TABLE
-
 
   const colData = await getFromCache(colTable, { city })
   const salaryData = await getFromCache(salaryTable, { job, city })

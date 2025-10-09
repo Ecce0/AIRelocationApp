@@ -1,5 +1,5 @@
 const Raleigh = () => {
-    return (<></>)
+  return <></>
 }
 
-export default Raleigh;
+export default Raleigh

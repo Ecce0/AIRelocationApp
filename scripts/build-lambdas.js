@@ -8,9 +8,9 @@ if (!existsSync('dist')) {
 
 const lambdaDirs = readdirSync('./backend', { withFileTypes: true })
   .filter((dir) => dir.isDirectory())
-  .map((dir) => dir.name);
+  .map((dir) => dir.name)
 
-(async () => {
+;(async () => {
   for (const dir of lambdaDirs) {
     const entryMjs = join('backend', dir, 'handler.mjs')
     const entryJs = join('backend', dir, 'handler.js')

@@ -1,5 +1,5 @@
 const Ai = () => {
-    return (<></>)
+  return <></>
 }
 
-export default Ai;
+export default Ai

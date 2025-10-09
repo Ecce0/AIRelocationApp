@@ -54,12 +54,14 @@ const salary = async (event) => {
 
   const { data } = await response.json()
 
-  const results = data.map(({ job_title, location, median_salary, salaries_updated_at }) => ({
-    job: job_title,
-    city: location,
-    average_salary: median_salary,
-    last_updated: salaries_updated_at
-  }))
+  const results = data.map(
+    ({ job_title, location, median_salary, salaries_updated_at }) => ({
+      job: job_title,
+      city: location,
+      average_salary: median_salary,
+      last_updated: salaries_updated_at,
+    }),
+  )
 
   // 4. Save results
   if (results.length > 0) {

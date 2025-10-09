@@ -1,7 +1,7 @@
 import { SSMClient, GetParameterCommand } from '@aws-sdk/client-ssm'
 
 const ssm = new SSMClient({
-  region: process.env.AWS_REGION || 'us-east-1'
+  region: process.env.AWS_REGION || 'us-east-1',
 })
 
 export const getSSMParam = async (paramKey) => {
