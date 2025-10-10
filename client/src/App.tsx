@@ -1,34 +1,25 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import Home from './components/pages/Home'
-// import Navbar from './components/utils/Navbar'
-// import Footer from './components/utils/Footer'
-// import Raleigh from './components/pages/Raleigh'
-// import WashingtonDC from './components/pages/WashingtonDC'
-// import Ai from './components/pages/Ai'
-// import Resume from './components/pages/Resume'
-// import Contact from './components/pages/Contact'
-// //import Layout from './components/utils/Layout'
+import { Routes, Route } from "react-router-dom"
+import Layout from "./components/utils/Layout"
+import Home from "./components/pages/Home"
+import Raleigh from "./components/pages/Raleigh"
+import WashingtonDC from "./components/pages/WashingtonDC"
+import Ai from "./components/pages/Ai"
+import Contact from "./components/pages/Contact"
+import Resume from "./components/pages/Resume"
 
 const App = () => {
   return (
-    <BrowserRouter>
- <div className="p-8 space-y-4">
-      <button className="btn btn-primary">Primary</button>
-      <button className="btn btn-secondary">Secondary</button>
-      <div className="alert alert-info">Info alert</div>
-    </div>
-  
-
-        {/* <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/raleigh" element={<Raleigh />} />
-          <Route path="/washington-dc" element={<WashingtonDC />} />
-          <Route path="/ai" element={<Ai />} />
-          <Route path="/resume" element={<Resume />} />
-          <Route path="/contact" element={<Contact />} />
-        </Routes>
-      <Footer /> */}
-    </BrowserRouter >
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/raleigh" element={<Raleigh />} />
+        <Route path="/washingtondc" element={<WashingtonDC />} />
+        <Route path="/ai" element={<Ai />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/Resume" element={<Resume />} />
+      </Route>
+    </Routes>
   )
 }
+
 export default App
