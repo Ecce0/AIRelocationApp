@@ -16,8 +16,7 @@
     "tf:quick": "cd Terraform && terraform init && terraform apply --auto-approve",
     "build:lambdas": "node ./scripts/build-lambdas.js",
     "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "shad": "npx shadcn@canary add"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.899.0",
@@ -25,9 +24,7 @@
     "@aws-sdk/client-sts": "^3.899.0",
     "@aws-sdk/credential-provider-ini": "^3.899.0",
     "@aws-sdk/credential-providers": "^3.899.0",
-    "@radix-ui/react-dialog": "^1.1.15",
-    "@radix-ui/react-separator": "^1.1.7",
-    "@radix-ui/react-slot": "^1.2.3",
+    "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.12.2",
     "lucide-react": "^0.460.0",
     "react": "^19.1.1",

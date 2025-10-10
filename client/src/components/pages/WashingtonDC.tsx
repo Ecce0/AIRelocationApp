@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
-import apiClient from '../api/apiClient/apiClient'
-import type { MetricsResponse } from '../api/api-spec/MetricsResponse'
+import apiClient from '../../api/apiClient/apiClient'
+import type { MetricsResponse } from '../../api/api-spec/MetricsResponse'
 
 const WashingtonDC = () => {
   const [data, setData] = useState<MetricsResponse | null>(null)
