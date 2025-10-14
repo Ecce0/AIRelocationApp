@@ -1,24 +1,44 @@
 import { Routes, Route } from "react-router-dom"
+import { AppProvider } from "./context/Context"
 import Layout from "./components/utils/Layout"
 import Home from "./components/pages/Home"
+import About from "./components/pages/About"
 import Raleigh from "./components/pages/Raleigh"
 import WashingtonDC from "./components/pages/WashingtonDC"
-import Ai from "./components/pages/Ai"
-import Contact from "./components/pages/Contact"
-import Resume from "./components/pages/Resume"
+
+
+const routes = [
+  {
+    path: "/",
+    element: <Home />,
+  },
+  { path: "/about",
+    element: <About />
+  },
+  {
+    path: "/raleigh/*" ,
+    element: <Raleigh />
+  },
+  {
+    path: "/washington-dc/*",
+    element: <WashingtonDC />
+  }
+]
 
 const App = () => {
   return (
-    <Routes>
-      <Route element={<Layout />}>
-        <Route path="/" element={<Home />} />
-        <Route path="/raleigh" element={<Raleigh />} />
-        <Route path="/washingtondc" element={<WashingtonDC />} />
-        <Route path="/ai" element={<Ai />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/Resume" element={<Resume />} />
-      </Route>
-    </Routes>
+    <AppProvider>
+      <Routes>
+        <Route element={<Layout />}>
+          {routes.map((route, index) => (
+            <Route 
+               key={index} 
+                path={route.path || `${route.path}/*`} 
+                element={route.element} />
+          ))}
+        </Route>
+      </Routes>
+    </AppProvider>
   )
 }
 
