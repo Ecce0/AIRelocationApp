@@ -5,6 +5,9 @@ import Home from "./components/pages/Home"
 import About from "./components/pages/About"
 import Raleigh from "./components/pages/Raleigh"
 import WashingtonDC from "./components/pages/WashingtonDC"
+import AI from "./components/pages/AI"
+import Contact from "./components/pages/Contact"
+import Resume from "./components/pages/Resume"
 
 
 const routes = [
@@ -22,6 +25,18 @@ const routes = [
   {
     path: "/washington-dc/*",
     element: <WashingtonDC />
+  },
+  {
+    path: "/ai",
+    element: <AI />
+  },
+  {
+    path: "/resume",
+    element: <Resume />
+  },
+  {
+    path: "/contact",
+    element: <Contact />
   }
 ]
 

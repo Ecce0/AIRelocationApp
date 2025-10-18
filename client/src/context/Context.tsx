@@ -5,6 +5,14 @@ interface AppContextProps {
   metrics: any
   salaryData: any
   colData: any
+  currentCity: string
+  targetCity: string
+  aiResponse: string | null
+  loading: boolean
+  setCurrentCity: (value: string | ((prevState: string) => string)) => void
+  setTargetCity: (value: string | ((prevState: string) => string)) => void
+  setAiResponse: any | null
+  setLoading: (value: boolean | ((prevState: boolean) => boolean)) => void
   getMetrics: () => Promise<void>
   getSalary: (city: string) => Promise<void>
   getCostOfLiving: (city: string) => Promise<void>
@@ -16,6 +24,10 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [metrics, setMetrics] = useState(null)
   const [salaryData, setSalaryData] = useState(null)
   const [colData, setColData] = useState(null)
+  const [currentCity, setCurrentCity] = useState("")
+  const [targetCity, setTargetCity] = useState("")
+  const [aiResponse, setAiResponse] = useState<string | null>(null)
+  const [loading, setLoading] = useState(false) 
 
   const getMetrics = async () => {
     const data = await fetchMetrics()
@@ -40,7 +52,15 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         colData,
         getMetrics,
         getSalary,
-        getCostOfLiving
+        getCostOfLiving,
+        currentCity,
+        targetCity,
+        aiResponse,
+        loading,
+        setCurrentCity,
+        setTargetCity,
+        setAiResponse,
+        setLoading,
       }}
     >
       {children}
