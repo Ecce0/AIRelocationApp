@@ -1,21 +1,27 @@
 import { Outlet } from "react-router-dom"
-import GlobalNavBar from "./GlobalNavBar.tsx"
-import Footer from "./GlobalFooter.tsx"
+import Navbar from "./Navbar"
+import Footer from "./Footer"
+import type { ReactNode } from "react"
 
-const Layout = () => {
+interface LayoutProps {
+  children?: ReactNode
+}
+
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="py-3 border bg-primary min-h-screen text-secondary font-playfair">
-    <div className="flex flex-col bg-secondary ">
-     {/*<div className="bg-primary border-2 border-red-950 text-2xl text-cyan-500">Test</div>
-      <div className="bg-primary border-2 border-red-950 text-2xl text-cyan-500">Test</div> */}
-
-      {/* <GlobalNavBar />
-      <main className="flex-grow container mx-auto px-6 py-10">
-        <Outlet />
-      </main>
-      <Footer /> */}
-       </div>
+   <div className="bg-primary min-h-screen flex flex-col justify-between font-code">
+      <div className="w-full flex justify-center items-start">
+        <Navbar />
       </div>
+
+      <main className="flex-grow flex justify-center items-center my-2 mx-26">
+        {children}
+      </main>
+
+      <div className="w-full flex justify-center items-end">
+        <Footer />
+      </div>
+    </div>
   )
 }
 

@@ -9,50 +9,30 @@ import AI from "./components/pages/AI"
 import Contact from "./components/pages/Contact"
 import Resume from "./components/pages/Resume"
 
-
 const routes = [
-  {
-    path: "/",
-    element: <Home />,
-  },
-  { path: "/about",
-    element: <About />
-  },
-  {
-    path: "/raleigh/*" ,
-    element: <Raleigh />
-  },
-  {
-    path: "/washington-dc/*",
-    element: <WashingtonDC />
-  },
-  {
-    path: "/ai",
-    element: <AI />
-  },
-  {
-    path: "/resume",
-    element: <Resume />
-  },
-  {
-    path: "/contact",
-    element: <Contact />
-  }
+  { path: "/", element: <Home /> },
+  { path: "/about", element: <About /> },
+  { path: "/raleigh/*", element: <Raleigh /> },
+  { path: "/washington-dc/*", element: <WashingtonDC /> },
+  { path: "/ai", element: <AI /> },
+  { path: "/resume", element: <Resume /> },
+  { path: "/contact", element: <Contact /> },
 ]
 
 const App = () => {
   return (
     <AppProvider>
-      <Routes>
-        <Route element={<Layout />}>
+      <Layout>
+        <Routes>
           {routes.map((route, index) => (
-            <Route 
-               key={index} 
-                path={route.path || `${route.path}/*`} 
-                element={route.element} />
+            <Route
+              key={index}
+              path={route.path}
+              element={route.element}
+            />
           ))}
-        </Route>
-      </Routes>
+        </Routes>
+      </Layout>
     </AppProvider>
   )
 }

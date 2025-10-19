@@ -1,7 +1,9 @@
 import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { useAppContext } from "../../context/Context"
-import CityCard from "../utils/CityCard"
+import UniversalCard from "../utils/UniversalCard"
+import CityCard from "../utils/UniversalCard"
+import rdu from '../../assets/rdu.jpg'
 
 interface RaleighProps {
   loc: string
@@ -50,17 +52,20 @@ const Raleigh = () => {
 
   return (
     <>
-    <div><h1>Raleigh, NC</h1></div>
-    {pageLocationInfo.map((page, key) => (
+    <UniversalCard imageSrc={rdu}>
+      {/* {pageLocationInfo.map((page, key) => (
+        
         <CityCard
           key={key}
           cityLinks={page.loc}
           cityHeader={page.header}
           descriptionBox={pathname === page.loc && `${page.description}`}
-          />
-      ))}  
+        /> 
+        
+      ))} */}
+      </UniversalCard>
     </>
-)
+  )
 }
 
-      export default Raleigh
+export default Raleigh
