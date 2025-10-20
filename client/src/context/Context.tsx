@@ -7,10 +7,12 @@ interface AppContextProps {
   colData: any
   currentCity: string
   targetCity: string
+  position: string
   aiResponse: string | null
   loading: boolean
   setCurrentCity: (value: string | ((prevState: string) => string)) => void
   setTargetCity: (value: string | ((prevState: string) => string)) => void
+  setPosition: (value: string | ((prevState: string) => string)) => void
   setAiResponse: any | null
   setLoading: (value: boolean | ((prevState: boolean) => boolean)) => void
   getMetrics: () => Promise<void>
@@ -26,6 +28,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const [colData, setColData] = useState(null)
   const [currentCity, setCurrentCity] = useState("")
   const [targetCity, setTargetCity] = useState("")
+  const [position, setPosition] = useState("")
   const [aiResponse, setAiResponse] = useState<string | null>(null)
   const [loading, setLoading] = useState(false) 
 
@@ -55,6 +58,8 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         getCostOfLiving,
         currentCity,
         targetCity,
+        position,
+        setPosition,
         aiResponse,
         loading,
         setCurrentCity,

@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer sm:footer-horizontal bg-transparent text-secondary m-2 p-2 items-center">
       <aside className="grid-flow-col items-center">
         <p className="text-base text-xs">
-          By <span className="text-accent">E. Collier</span>. Copyright © 2025 – All rights reserved
+          By <span className="text-accent">E. Collier</span>  Copyright © 2025 – All rights reserved
         </p>
       </aside>
 

@@ -9,12 +9,12 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-   <div className="bg-primary min-h-screen flex flex-col justify-between font-code">
+   <div className="bg-primary min-h-screen flex flex-col justify-between font-oxanium">
       <div className="w-full flex justify-center items-start">
         <Navbar />
       </div>
 
-      <main className="flex-grow flex justify-center items-center my-2 mx-26">
+      <main className="flex-grow flex justify-center items-center my-2 mx-8">
         {children}
       </main>
 

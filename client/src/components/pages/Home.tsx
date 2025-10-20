@@ -1,4 +1,3 @@
-import React from "react"
 import UniversalCard from "../utils/UniversalCard"
 import home3 from "../../assets/home3.jpg"
 
@@ -6,7 +5,7 @@ const links = [
   { title: "About tRA", nav: "/about" },
   { title: "Raleigh, NC", nav: "/raleigh" },
   { title: "Washington, DC", nav: "/washington-dc" },
-  { title: "Relocation + AI", nav: "/relocation-ai" },
+  { title: "Relocation + AI", nav: "/ai" },
   { title: "Resume", nav: "/resume" },
   { title: "Contact", nav: "/contact" },
 ]
