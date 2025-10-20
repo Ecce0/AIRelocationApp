@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom"
+import { ErrorBoundary } from 'react-error-boundary'
 import { AppProvider } from "./context/Context"
 import Layout from "./components/utils/Layout"
 import Home from "./components/pages/Home"
@@ -7,6 +8,7 @@ import Raleigh from "./components/pages/Raleigh"
 import WashingtonDC from "./components/pages/WashingtonDC"
 import AI from "./components/pages/AI"
 import Resume from "./components/pages/Resume"
+import TechnicalError from "./components/utils/TechnicalError"
 
 const routes = [
   { path: "/", element: <Home /> },
@@ -21,6 +23,7 @@ const App = () => {
   return (
     <AppProvider>
       <Layout>
+        <ErrorBoundary FallbackComponent={TechnicalError}>
         <Routes>
           {routes.map((route, index) => (
             <Route
@@ -29,7 +32,9 @@ const App = () => {
               element={route.element}
             />
           ))}
+          <Route path="*" element={<TechnicalError />} />
         </Routes>
+        </ErrorBoundary>
       </Layout>
     </AppProvider>
   )

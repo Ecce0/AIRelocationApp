@@ -6,8 +6,7 @@ const links = [
   { title: "Raleigh, NC", nav: "/raleigh" },
   { title: "Washington, DC", nav: "/washington-dc" },
   { title: "Relocation + AI", nav: "/ai" },
-  { title: "Resume", nav: "/resume" },
-  { title: "Contact", nav: "/contact" },
+  { title: "Resume", nav: "/resume" }
 ]
 
 const Home = () => {

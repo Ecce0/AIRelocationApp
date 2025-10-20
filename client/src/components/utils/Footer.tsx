@@ -12,6 +12,7 @@ const Footer = () => {
       <nav className="grid-flow-col gap-4 md:place-self-center md:justify-self-end text-lg">
         <a
           href="https://github.com/"
+          target="_blank"
           rel="noopener noreferrer"
           className="
             transition-all
@@ -30,6 +31,7 @@ const Footer = () => {
 
         <a
           href="https://linkedin.com/"
+          target="_blank" 
           rel="noopener noreferrer"
           className="
             transition-all

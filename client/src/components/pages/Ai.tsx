@@ -17,6 +17,8 @@ const AI = () => {
     setTargetCity,
     position,
     setPosition,
+    profLevel,
+    setProfLevel,
     aiResponse,
     setAiResponse,
     loading,
@@ -44,6 +46,8 @@ const AI = () => {
       setTargetCity(value)
     } else if (name === 'position') {
       setPosition(value)
+    } else if (name === 'profLevel') {
+      setProfLevel(value)
     }
   }
 
@@ -55,7 +59,7 @@ const AI = () => {
         alt=""
         className="absolute inset-0 w-full h-full object-cover contrast-75"
       />
-      <div className="relative z-20 w-11/12 md:w-10/12 lg:w-8/12 h-auto bg-primary/80 backdrop-blur-sm rounded-md p-8 font-playfair text-secondary flex flex-col gap-8">
+      <div className="relative z-20 w-11/12 md:w-10/12 lg:w-8/12 h-auto bg-primary/80 backdrop-blur-sm rounded-md p-8 font-playfair text-secondary flex flex-col flex-nowrap gap-8">
         <h1 className="text-3xl font-bold font-oxanium mb-2">AI Relocation Insights</h1>
 
         {/* <div className="stats shadow bg-base-100/20 text-secondary w-full">
@@ -77,7 +81,7 @@ const AI = () => {
           </div>
         </div> */}
 
-        <div className="grid grid-cols-3 gap-4 font-oxanium">
+        <div className="grid grid-cols-4 gap-4 font-oxanium">
           <input 
               type="text" 
               placeholder="Current City" 
@@ -97,6 +101,13 @@ const AI = () => {
               className="input input-info col-span-1 bg-base-100/10"
               placeholder="Cloud Position"
               value={position}
+              onChange={onChange}
+          />
+          <input 
+              type="text" 
+              className="input input-error col-span-1 bg-base-100/10"
+              placeholder="Professional Level"
+              value={profLevel}
               onChange={onChange}
           />
         </div>

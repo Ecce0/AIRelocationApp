@@ -13,15 +13,18 @@ const Resume = () => {
       <p>
         <Link
           to="https://linkedin.com/in/ecollier"
-          target="_blank"
+          target="_blank" 
           rel="noopener noreferrer"
-          className="underline"
+        
+
         >
           LinkedIn
         </Link>
       </p>
       <p>
-        <Link to="/portfolio" className="underline">
+        <Link to="/portfolio"
+         target="_blank" 
+         rel="noopener noreferrer">
           Portfolio
         </Link>
       </p>
