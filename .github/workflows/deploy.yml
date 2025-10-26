@@ -48,3 +48,7 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       AWS_DEFAULT_REGION: ${{ vars.AWS_DEFAULT_REGION }}
+      TF_VAR_openwebninja_api_key: ${{ secrets.OPENWEBNINJA_API_KEY }}
+      TF_VAR_openwebninja_api_url: ${{ vars.OPENWEBNINJA_API_URL }}
+      TF_VAR_zyla_api_key: ${{ secrets.ZYLA_API_KEY }}
+      TF_VAR_zyla_api_url: ${{ vars.ZYLA_API_URL }}
