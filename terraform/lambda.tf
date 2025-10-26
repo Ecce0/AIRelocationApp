@@ -6,7 +6,7 @@ data "archive_file" "ping_zip" {
 }
 
 resource "aws_lambda_function" "ping" {
-  function_name    = "relo-ai-app-ping"
+  function_name    = "relo-calc-app-ping"
   role             = aws_iam_role.lambda_role_auth.arn
   runtime          = "nodejs22.x"
   handler          = "handler.default"
@@ -16,12 +16,12 @@ resource "aws_lambda_function" "ping" {
 
   environment {
     variables = {
-      APP_NAME = "relo-ai-app"
+      APP_NAME = "relo-calc-app"
     }
   }
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }
@@ -34,7 +34,7 @@ data "archive_file" "col_zip" {
 }
 
 resource "aws_lambda_function" "cost_of_living" {
-  function_name    = "relo-ai-app-cost-of-living"
+  function_name    = "relo-calc-app-cost-of-living"
   role             = aws_iam_role.lambda_role_auth.arn
   runtime          = "nodejs22.x"
   handler          = "handler.default"
@@ -59,7 +59,7 @@ data "archive_file" "salary_zip" {
 }
 
 resource "aws_lambda_function" "salary" {
-  function_name    = "relo-ai-app-salary"
+  function_name    = "relo-calc-app-salary"
   role             = aws_iam_role.lambda_role_auth.arn
   runtime          = "nodejs22.x"
   handler          = "handler.default"
@@ -84,7 +84,7 @@ data "archive_file" "metrics_zip" {
 }
 
 resource "aws_lambda_function" "metrics" {
-  function_name    = "relo-ai-app-metrics"
+  function_name    = "relo-calc-app-metrics"
   role             = aws_iam_role.lambda_role_auth.arn
   runtime          = "nodejs22.x"
   handler          = "handler.default"
@@ -108,7 +108,7 @@ data "archive_file" "auth_zip" {
 }
 
 resource "aws_lambda_function" "auth" {
-  function_name    = "relo-ai-app-auth"
+  function_name    = "relo-calc-app-auth"
   role             = aws_iam_role.lambda_role_auth.arn
   runtime          = "nodejs22.x"
   handler          = "handler.auth"

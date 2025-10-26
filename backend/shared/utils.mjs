@@ -8,7 +8,7 @@ export const getSSMParam = async (paramKey) => {
   try {
     const response = await ssm.send(
       new GetParameterCommand({
-        Name: `/relo-ai-app/${paramKey}`,
+        Name: `/relo-calc-app/${paramKey}`,
         WithDecryption: true,
       }),
     )

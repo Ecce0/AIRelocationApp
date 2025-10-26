@@ -1,13 +1,17 @@
 import { useEffect, type ReactNode } from "react"
 import Navbar from "./Navbar"
 import Footer from "./Footer"
-
+import Loading from "./Loading"
+import { useAppContext } from "../../context/Context"
+import ErrorOverlay from "./ErrorScreen"
 
 interface LayoutProps {
   children?: ReactNode
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: LayoutProps) => { 
+  const { loading, error } = useAppContext()
+
       useEffect(() => {
       const images = [
         "/src/assets/home3.jpg",
@@ -32,13 +36,12 @@ const Layout = ({ children }: LayoutProps) => {
       <div className="w-full flex justify-center items-start">
         <Navbar />
       </div>
-
       <main className="flex-grow flex justify-center items-center my-2 mx-8">
-        {children}
+       {loading ? <Loading /> : children}
       </main>
-
       <div className="w-full flex justify-center items-end">
         <Footer />
+       {error && <ErrorOverlay />}
       </div>
     </div>
   )

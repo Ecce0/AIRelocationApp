@@ -11,10 +11,12 @@ export default defineConfig({
       "@": path.resolve(__dirname, "client/src"),
     },
   },
-  server: {
-    port: 1111,
-    fs: { strict: false }
-  },
+ server: {
+  port: 1111,
+  fs: { strict: false },
+  open: true,
+},
+  appType: "spa",
   build: {
     outDir: "dist",
     emptyOutDir: true,

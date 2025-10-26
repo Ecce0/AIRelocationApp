@@ -14,7 +14,7 @@ data "aws_iam_policy_document" "lambda_assume_role" {
 
 # ===== IAM Role for Lambdas =====
 resource "aws_iam_role" "lambda_role_auth" {
-  name               = "relo-ai-app-lambda-role"
+  name               = "relo-calc-app-lambda-role"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
 
@@ -72,7 +72,7 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
   }
 
   statement {
-    sid    = "ReloAiAppCacheAccess"
+    sid    = "ReloCaclAppCacheAccess"
     effect = "Allow"
     actions = [
       "dynamodb:GetItem",
@@ -83,8 +83,8 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
       "dynamodb:Scan"
     ]
     resources = [
-      aws_dynamodb_table.relo_ai_app_cache.arn,
-      "${aws_dynamodb_table.relo_ai_app_cache.arn}/index/*"
+      aws_dynamodb_table.relo_calc_app_cache.arn,
+      "${aws_dynamodb_table.relo_calc_app_cache.arn}/index/*"
     ]
   }
 
@@ -97,14 +97,14 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
       "ssm:GetParametersByPath"
     ]
     resources = [
-      "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/relo-ai-app/*"
+      "arn:aws:ssm:us-east-1:${data.aws_caller_identity.current.account_id}:parameter/relo-calc-app/*"
     ]
   }
 }
 
 # ===== Create the IAM Policy =====
 resource "aws_iam_policy" "lambda_dynamodb" {
-  name        = "relo-ai-app-lambda-policy"
+  name        = "relo-calc-app-lambda-policy"
   description = "DynamoDB + SSM access for Lambda functions"
   policy      = data.aws_iam_policy_document.lambda_dynamodb.json
 }

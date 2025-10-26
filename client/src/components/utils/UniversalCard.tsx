@@ -1,14 +1,14 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-interface UCProps {
-  title: string
-  description: string
-  links: { title: string; nav: string }[]
+interface UniversalCardProps {
   imageSrc: string
+  title: string
+  description: React.ReactNode
+  links: { title: string; nav: string }[]
 }
 
-const UniversalCard: React.FC<UCProps> = ({ imageSrc, title, description, links }) => {
+const UniversalCard: React.FC<UniversalCardProps> = ({ imageSrc, title, description, links }) => {
   return (
     <div className="relative w-full min-h-[70vh] flex justify-center items-center overflow-visible">
       <img

@@ -2,43 +2,77 @@ import React, { createContext, useContext, useState } from "react"
 import { fetchMetrics, fetchSalary, fetchCostOfLiving } from "../api/apiClient/apiClient"
 
 interface AppContextProps {
-  metrics: any
+  metricsData: any
   salaryData: any
   colData: any
   currentCity: string
   targetCity: string
   position: string
   profLevel: string
-  aiResponse: string | null
+  ccResponse: string | null
   loading: boolean
   error: boolean
+  increaseInPay: boolean
+  decreaseInPay: boolean
+  payDifference: number
+  cloudRoles: string[]
+  profLevels: string[]
   setCurrentCity: (value: string | ((prevState: string) => string)) => void
   setTargetCity: (value: string | ((prevState: string) => string)) => void
   setPosition: (value: string | ((prevState: string) => string)) => void
   setProfLevel: (value: string | ((prevState: string) => string)) => void
-  setAiResponse: (value: string | null | ((prevState: string | null) => string | null)) => void
+  setCCResponse: (value: string | null | ((prevState: string | null) => string | null)) => void
   setLoading: (value: boolean | ((prevState: boolean) => boolean)) => void
   setError: (value: boolean | ((prevState: boolean) => boolean)) => void
+  setIncreaseInPay: (value: boolean | ((prevState: boolean) => boolean)) => void
+  setDecreaseInPay: (value: boolean | ((prevState: boolean) => boolean)) => void
+  setPayDifference: (value: number | ((prevState: number) => number)) => void
   getMetrics: () => Promise<void>
-  getSalary: (city: string) => Promise<void>
+  getSalary: (city: string, job: string) => Promise<void>
   getCostOfLiving: (city: string) => Promise<void>
 }
 
 const Context = createContext<AppContextProps | undefined>(undefined)
 
 export const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const [metrics, setMetrics] = useState(null)
+  const [metricsData, setMetricsData] = useState(null)
   const [salaryData, setSalaryData] = useState(null)
   const [colData, setColData] = useState(null)
   const [currentCity, setCurrentCity] = useState("")
   const [targetCity, setTargetCity] = useState("")
   const [position, setPosition] = useState("")
   const [profLevel, setProfLevel] = useState("")
-  const [aiResponse, setAiResponse] = useState<string | null>(null)
+  const [ccResponse, setCCResponse] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(false)
+  const [increaseInPay, setIncreaseInPay] = useState(false)
+  const [decreaseInPay, setDecreaseInPay] = useState(false)
+  const [payDifference, setPayDifference] = useState(0)
+    const cloudRoles = [
+    "Cloud Developer",
+    "Cloud Engineer",
+    "Cloud Architect",
+    "DevOps Engineer",
+    "Site Reliability Engineer",
+    "Cloud Security Engineer",
+    "Cloud Solutions Architect",
+    "Cloud Consultant"
+  ]
+    const profLevels = [
+    "I — Junior / Entry / Associate",
+    "II — Mid-Level / Developer",
+    "III — Senior / Lead",
+    "IV — Principal / Manager",
+    "V — Director / VP / Chief"
+  ]
 
- async function getSalary(city: string) {
+
+  const getSalary = async (city: string, job: string) => {
+    if (!city || !job) {
+      console.warn("getCostOfLiving called without city or job")
+      return
+    }
+
     const cacheKey = `salary_${city.toLowerCase()}`
     const cached = sessionStorage.getItem(cacheKey)
 
@@ -46,86 +80,118 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
       setSalaryData(JSON.parse(cached))
       return
     }
-
     try {
-      const data = await fetchSalary(city)
+      setLoading(true)
+      setError(false)
+      const data = await fetchSalary(city, job)
       setSalaryData(data)
       sessionStorage.setItem(cacheKey, JSON.stringify(data))
+      return data
     } catch (err) {
       console.error("Error fetching salary data:", err)
+      setError(true)
+    } finally {
+      setLoading(false)
     }
   }
 
-  const getCostOfLiving = async (city: string) => {
-  const cacheKey = `col_${city.toLowerCase()}`
-  const cached = sessionStorage.getItem(cacheKey)
+    const getCostOfLiving = async (city: string) => {
+      if (!city) {
+        console.warn("getCostOfLiving called without city")
+        return
+      }
+      const cacheKey = `col_${city.toLowerCase()}`
+      const cached = sessionStorage.getItem(cacheKey)
+  
+      if (cached) {
+        setColData(JSON.parse(cached))
+        return
+      }
+  
+      try {
+        setLoading(true)
+        setError(false)
+        const data = await fetchCostOfLiving(city)
+        sessionStorage.setItem(cacheKey, JSON.stringify(data))
+        return data
+      } catch (err) {
+        console.error("Error fetching COL data:", err)
+        setError(true)
+      } finally {
+        setLoading(false)
+      }
+    }
+  
+    const getMetrics = async () => {
+      const cacheKey = "metrics"
+      const cached = sessionStorage.getItem(cacheKey)
+  
+      if (cached) {
+        setMetricsData(JSON.parse(cached))
+        return
+      }
+  
+      try {
+        setLoading(true)
+        setError(false)
+        const data = await fetchMetrics()
+        setMetricsData(data)
+        sessionStorage.setItem(cacheKey, JSON.stringify(data))
+        setLoading(false)
+        return data
+      } catch (err) {
+        console.error("Error fetching metrics data:", err)
+        setError(true)
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  if (cached) {
-    setColData(JSON.parse(cached))
-    return
+    
+
+  
+    return (
+      <Context.Provider
+        value={{
+          metricsData,
+          salaryData,
+          colData,
+          currentCity,
+          targetCity,
+          position,
+          profLevel,
+          ccResponse,
+          loading,
+          error,
+          increaseInPay,
+          decreaseInPay,
+          payDifference,
+          cloudRoles,
+          profLevels,
+          setDecreaseInPay,
+          setIncreaseInPay,
+          setPayDifference,
+          getMetrics,
+          getSalary,
+          getCostOfLiving,
+          setPosition,
+          setProfLevel,
+          setError,
+          setCurrentCity,
+          setTargetCity,
+          setCCResponse,
+          setLoading,
+        }}
+      >
+        {children}
+      </Context.Provider>
+    )
   }
-
-  try {
-    const data = await fetchCostOfLiving(city)
-    setColData(data)
-    sessionStorage.setItem(cacheKey, JSON.stringify(data))
-  } catch (err) {
-    console.error("Error fetching COL data:", err)
+  
+  export const useAppContext = () => {
+    const context = useContext(Context)
+    if (!context) {
+      throw new Error("useAppContext must be used within AppProvider")
+    }
+    return context
   }
-}
-
-const getMetrics = async () => {
-  const cacheKey = "metrics"
-  const cached = sessionStorage.getItem(cacheKey)
-
-  if (cached) {
-    setMetrics(JSON.parse(cached))
-    return
-  }
-
-  try {
-    const data = await fetchMetrics()
-    setMetrics(data)
-    sessionStorage.setItem(cacheKey, JSON.stringify(data))
-  } catch (err) {
-    console.error("Error fetching metrics data:", err)
-  }
-}
-
-  return (
-    <Context.Provider
-      value={{
-        metrics,
-        salaryData,
-        colData,
-        currentCity,
-        targetCity,
-        position,
-        profLevel,
-        aiResponse,
-        loading,
-        error,
-        getMetrics,
-        getSalary,
-        getCostOfLiving,
-        setPosition,
-        setProfLevel,
-        setError,
-        setCurrentCity,
-        setTargetCity,
-        setAiResponse,
-        setLoading,
-      }}
-    >
-      {children}
-    </Context.Provider>
-  )
-}
-
-export const useAppContext = () => {
-  const context = useContext(Context)
-  if (!context) {
-    throw new Error("useAppContext must be used within AppProvider")
-  }
-  return context
-}

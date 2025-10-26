@@ -1,5 +1,5 @@
 {
-  "name": "relo-ai-app",
+  "name": "relo-calc-app",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -10,8 +10,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "build:lambdas": "node ./scripts/build-backend.mjs",
+    "build:lambdas": "node ./scripts/build-lambdas.mjs",
     "tf:init": "cd terraform && terraform init",
+    "tf:val": "cd terraform && terraform validate",
     "tf:plan": "cd terraform && terraform plan",
     "tf:apply": "cd terraform && terraform apply",
     "tf:destroy": "cd terraform && terraform destroy",

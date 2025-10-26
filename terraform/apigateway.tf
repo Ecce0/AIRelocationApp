@@ -1,7 +1,21 @@
+locals {
+  allowed_origin  = "http://localhost:1111" # change for prod
+  allowed_headers = ["Content-Type", "X-Amz-Date", "Authorization", "X-Api-Key", "X-Amz-Security-Token"]
+  allowed_methods = ["GET", "POST", "OPTIONS"]
+}
+
 # Create an HTTP API Gateway
 resource "aws_apigatewayv2_api" "relo_app_api" {
-  name          = "relo-ai-app-api"
+  name          = "relo-calc-app-api"
   protocol_type = "HTTP"
+
+  cors_configuration {
+    allow_origins  = [local.allowed_origin]
+    allow_methods  = local.allowed_methods
+    allow_headers  = local.allowed_headers
+    expose_headers = []
+    max_age        = 3600
+  }
 }
 
 # Deployment + stage
@@ -11,9 +25,7 @@ resource "aws_apigatewayv2_stage" "dev_stage" {
   auto_deploy = true
 }
 
-
 ## ===== PING ========
-# Integrate API Gateway with the Lambda
 resource "aws_apigatewayv2_integration" "ping_integration" {
   api_id             = aws_apigatewayv2_api.relo_app_api.id
   integration_type   = "AWS_PROXY"
@@ -21,14 +33,12 @@ resource "aws_apigatewayv2_integration" "ping_integration" {
   integration_method = "POST"
 }
 
-# GET /ping → Lambda
 resource "aws_apigatewayv2_route" "ping_route" {
   api_id    = aws_apigatewayv2_api.relo_app_api.id
   route_key = "GET /ping"
   target    = "integrations/${aws_apigatewayv2_integration.ping_integration.id}"
 }
 
-# Grant API Gateway permission to invoke Lambda
 resource "aws_lambda_permission" "ping_permission" {
   statement_id  = "AllowAPIGatewayInvoke"
   action        = "lambda:InvokeFunction"
@@ -36,7 +46,6 @@ resource "aws_lambda_permission" "ping_permission" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
 }
-
 
 ## ===== SALARY ========
 resource "aws_apigatewayv2_integration" "salary_integration" {
@@ -60,7 +69,7 @@ resource "aws_lambda_permission" "salary_permission" {
   source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
 }
 
-## ===== COL ========
+## ===== COST OF LIVING ========
 resource "aws_apigatewayv2_integration" "col_integration" {
   api_id             = aws_apigatewayv2_api.relo_app_api.id
   integration_type   = "AWS_PROXY"
@@ -70,7 +79,7 @@ resource "aws_apigatewayv2_integration" "col_integration" {
 
 resource "aws_apigatewayv2_route" "col_route" {
   api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "GET /cost-of-living"
+  route_key = "GET /col"
   target    = "integrations/${aws_apigatewayv2_integration.col_integration.id}"
 }
 
@@ -82,7 +91,6 @@ resource "aws_lambda_permission" "col_permission" {
   source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
 }
 
-
 ## ===== METRICS ========
 resource "aws_apigatewayv2_integration" "metrics_integration" {
   api_id             = aws_apigatewayv2_api.relo_app_api.id
@@ -93,7 +101,7 @@ resource "aws_apigatewayv2_integration" "metrics_integration" {
 
 resource "aws_apigatewayv2_route" "metrics_route" {
   api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "POST /metrics"
+  route_key = "GET /metrics"
   target    = "integrations/${aws_apigatewayv2_integration.metrics_integration.id}"
 }
 
@@ -105,13 +113,6 @@ resource "aws_lambda_permission" "metrics_permission" {
   source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
 }
 
-## ===== AUTH ========
-// save for AWS Cognito + OAuth2
-
-
-## ===== OUTPUTS ========
-
 output "api_gateway_url" {
-  value = "${aws_apigatewayv2_stage.dev_stage.invoke_url}"
+  value = aws_apigatewayv2_stage.dev_stage.invoke_url
 }
-

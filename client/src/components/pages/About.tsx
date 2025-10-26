@@ -1,46 +1,88 @@
+import { useLocation } from "react-router-dom"
 import UniversalCard from "../utils/UniversalCard"
-import home2 from '../../assets/home2.jpg'
+import home2 from "../../assets/home2.jpg"
 
-const links = [
-  { title: "Home", nav: "/" },
-  { title: "Raleigh, NC", nav: "/raleigh" },
-  { title: "Washington, DC", nav: "/washington-dc" },
-  { title: "Relocation + AI", nav: "/relocation-ai" },
-  { title: "Resume", nav: "/resume" },
-  { title: "Contact", nav: "/contact" },
-]
-
-const desc = `I currently reside in Raleigh, North Carolina, 
-but I’ve always envisioned building a life in the DMV — the Washington, 
-D.C., Maryland, and Virginia region. Every visit brings me a sense of 
-belonging, purpose, and home. As an AWS Cloud Engineer with five years of 
-experience, I’m now ready to make that transition — I just need the right 
-opportunity that aligns with both career growth and cost of living.
-I created the Relocation AI App to simplify the complex process of comparing 
-salaries and living expenses between cities. Understanding what it truly takes 
-to live comfortably shouldn’t be confusing. The app uses live data from multiple 
-sources — including OpenWebNinja for salary insights and Zyla Labs for 
-cost-of-living data — to help users make informed relocation decisions.
-The Relocation AI App provides salary comparisons for eight core 
-cloud roles — such as Cloud Developer, Cloud Engineer, Cloud Architect, 
-DevOps Engineer, Site Reliability Engineer (SRE), Cloud Security Engineer, 
-Cloud Solutions Architect, and Cloud Consultant — across five professional 
-levels, from junior through executive leadership. These roles and definitions 
-are modeled in part after the industry insights published by Teal.
-This project combines AI, cloud architecture, and real-world data to transform 
-the complexity of relocation into clarity — empowering others, like me, to 
-pursue their goals confidently and strategically.`
+interface AboutProps {
+  nav: string
+  title: string
+  description: React.ReactNode 
+}
 
 const About = () => {
-    return (
+  const { pathname } = useLocation()
+
+  const aboutPages: AboutProps[] = [
+    {
+      nav: "/about",
+      title: "About tRCA",
+      description: (
         <>
-         <UniversalCard 
-           title='About tRA'
-           description={desc}
-           imageSrc={home2}
-           links={links}
-         />
+          The Relocation-Calculation App (tRCA) was built to simplify one of the hardest
+          questions in career planning — “Can I afford to live there?”
+          As a cloud engineer preparing for a move to the DMV, I wanted
+          a clear, data-driven way to compare salaries and living costs
+          across cities. The app transforms that research process into
+          clarity and confidence.
         </>
-    )
+      ),
+    },
+    {
+      nav: "/about/how-it-works",
+      title: "How Does It Work?",
+      description: (
+        <>
+          tRCA pulls live salary data from{" "}
+          <a
+            href="https://www.openwebninja.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            OpenWebNinja
+          </a>{" "}
+          and cost-of-living data from{" "}
+          <a
+            href="https://zylalabs.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            Zyla Labs
+          </a>
+          . It maps eight cloud roles — Cloud Engineer,
+          Cloud Developer, SRE, Cloud Architect, DevOps Engineer, Cloud Security Engineer, Cloud Solutions Architect,
+          Cloud Consultant — across five professional levels modeled
+          after{" "}
+          <a
+            href="https://www.tealhq.com/job-titles/cloud-developer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            Teal
+          </a>{" "}
+          benchmarks. Users can compare cities, adjust experience levels,
+          and see metrics rendered in real time using mathematical computing.
+        </>
+      ),
+    },
+    {
+      nav: '/',
+      title: 'Home',
+      description: null
+    }
+  ]
+
+  const currentPage = aboutPages.find((page) => page.nav === pathname)
+
+  return (
+    <UniversalCard
+      title={currentPage?.title || "About tRA"}
+      description={currentPage?.description || "Information not available."}
+      imageSrc={home2}
+      links={aboutPages.map(({ title, nav }) => ({ title, nav }))}
+    />
+  )
 }
+
 export default About

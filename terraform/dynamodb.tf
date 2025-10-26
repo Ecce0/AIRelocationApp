@@ -17,7 +17,7 @@ resource "aws_dynamodb_table" "relocation_metrics" {
   }
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }
@@ -43,14 +43,14 @@ resource "aws_dynamodb_table" "job_salaries" {
   }
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }
 
 // ======= Cache Table ========
-resource "aws_dynamodb_table" "relo_ai_app_cache" {
-  name         = "relo-ai-app-cache"
+resource "aws_dynamodb_table" "relo_calc_app_cache" {
+  name         = "relo-calc-app-cache"
   billing_mode = "PAY_PER_REQUEST" 
   hash_key     = "city"
   range_key    = "metric"
@@ -66,7 +66,7 @@ resource "aws_dynamodb_table" "relo_ai_app_cache" {
   }
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }
@@ -74,7 +74,7 @@ resource "aws_dynamodb_table" "relo_ai_app_cache" {
 
 // ======= Cost of Living Cache Table ======
 resource "aws_dynamodb_table" "cost_of_living_cache" {
-  name         = "relo-ai-app-cost-of-living-cache"
+  name         = "relo-calc-app-cost-of-living-cache"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "city"
 
@@ -84,7 +84,7 @@ resource "aws_dynamodb_table" "cost_of_living_cache" {
   }
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }

@@ -7,7 +7,7 @@ import rdu from "../../assets/rdu.jpg"
 interface RaleighProps {
   nav: string
   title: string
-  description: string
+  description: string | null
 }
 
 const Raleigh = () => {
@@ -15,37 +15,43 @@ const Raleigh = () => {
   const { pathname } = useLocation()
 
   const pageLocationInfo: RaleighProps[] = [
-    {
-      nav: "/raleigh",
-      title: "Raleigh, NC",
-      description: `I’ve lived in Sanford, Greensboro, Charlotte, and now Raleigh for a total of 13 years...`,
-    },
-    {
-      nav: "/raleigh/taxes",
-      title: "Taxes",
-      description: `Raleigh, NC has a relatively moderate tax burden compared to other major cities...`,
-    },
-    {
-      nav: "/raleigh/job-market",
-      title: "Job Market",
-      description: `Raleigh, NC boasts a robust and diverse job market, driven by its strong presence...`,
-    },
-    {
-      nav: "/raleigh/salary",
-      title: "Salary",
-      description: `The average salary in Raleigh, NC is approximately $65,000 per year...`,
-    },
-    {
-      nav: "/raleigh/col",
-      title: "Cost of Living",
-      description: `Raleigh, NC has a cost of living that is slightly above the national average...`,
-    },
-  ]
+  {
+    nav: "/raleigh",
+    title: "Raleigh, NC",
+    description: `Raleigh blends Southern charm with a growing tech economy. After living in several North Carolina cities, I've spent the last few years here experiencing its balance of affordability, opportunity, and community. With proximity to Research Triangle Park, it’s a strong base for cloud and software professionals looking to grow.`,
+  },
+  {
+    nav: "/raleigh/taxes",
+    title: "Taxes",
+    description: `North Carolina maintains a flat state income tax rate of 4.5%, making Raleigh relatively moderate compared to states with progressive rates. Property taxes remain below the national average, while sales tax stays around 7%, keeping the overall burden predictable for long-term residents.`,
+  },
+  {
+    nav: "/raleigh/job-market",
+    title: "Job Market",
+    description: `The Raleigh-Durham area continues to expand its cloud, data, and software sectors thanks to major employers like IBM, Red Hat, and SAS. Startups and remote-first roles have added flexibility, making the region competitive with larger metros for cloud engineers and developers.`,
+  },
+  {
+    nav: "/raleigh/salary",
+    title: "Salary",
+    description: `Average tech salaries in Raleigh range from $90K to $130K depending on role and experience. Cloud and DevOps positions command the highest median range, reflecting steady regional demand and cost-of-living alignment with national averages.`,
+  },
+  {
+    nav: "/raleigh/col",
+    title: "Cost of Living",
+    description: `Raleigh’s cost of living sits roughly 5% above the U.S. average, driven by rising housing demand. However, utilities, healthcare, and transportation remain affordable, keeping it one of the best value metros for tech professionals transitioning from higher-cost regions.`,
+  },
+  {
+      nav: '/',
+      title: 'Home',
+      description: null
+  }
+]
+
 
   const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
 
   useEffect(() => {
-    getSalary("Raleigh, NC")
+    getSalary("Raleigh, NC", "Cloud Engineer")
     getCostOfLiving("Raleigh, NC")
   }, [])
 

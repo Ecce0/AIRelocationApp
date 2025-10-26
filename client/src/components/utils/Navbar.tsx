@@ -3,7 +3,7 @@ import {
   FaHome,
   FaPlaneArrival,
   FaPlaneDeparture,
-  FaRobot,
+  FaTruckMoving,
   FaQuestionCircle,
   FaAddressCard,
 } from "react-icons/fa"
@@ -23,7 +23,7 @@ const navRoutes = [
   { name: "About", path: "/about", icon: <FaQuestionCircle /> },
   { name: "RDU", path: "/raleigh", icon: <FaPlaneDeparture /> },
   { name: "DMV", path: "/washington-dc", icon: <FaPlaneArrival /> },
-  { name: "AI", path: "/ai", icon: <FaRobot /> },
+  { name: "Relo", path: "/relo-calc", icon: <FaTruckMoving />},
   { name: "Resume", path: "/resume", icon: <FaAddressCard /> },
 ]
 
@@ -31,9 +31,9 @@ const Navbar = () => {
   return (
     <div className="navbar bg-transparent text-primary px-4">
       <div className="navbar-start flex items-center gap-2">
-        <img src={logo} alt="Relo AI Logo" className="w-12 h-12" />
+        <img src={logo} alt="Relo Calc Logo" className="w-12 h-12" />
         <Link to="/" className="text-secondary text-lg">
-          The Relo AI App
+          The Relo Calc App
         </Link>
       </div>
       <div className="navbar-end">

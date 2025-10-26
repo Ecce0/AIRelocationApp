@@ -2,63 +2,65 @@ import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
 import { useAppContext } from "../../context/Context"
 import UniversalCard from "../utils/UniversalCard"
-import dc from '../../assets/dc.jpg'
+import dc from "../../assets/dc.jpg"
 
 interface DCProps {
   nav: string
   title: string
-  description: string
+  description: string | null
 }
 
 const WashingtonDC = () => {
-  const { salaryData, colData, getSalary, getCostOfLiving } = useAppContext()
+  const { getSalary, getCostOfLiving } = useAppContext()
   const { pathname } = useLocation()
 
-  const pageLocationInfo = [
+  const pageLocationInfo: DCProps[] = [
     {
       nav: "/washington-dc",
-      title: "",
-      description: `This is where I belong! The culture feels like a missing piece of my life’s puzzle—diverse, intellectual, and full of energy. From the Smithsonian museums and rich history to the art, music, and political pulse, Washington, DC has always had my heart. The city’s rhythm is uniquely its own—Go-go music echoing through the streets, the mysterious absence of “J” Street, and the legendary Ben’s Chili Bowl that feels like a rite of passage for anyone new to the area.
-      DC inspires ambition. It challenges you to grow while surrounding you with purpose and opportunity. Every visit feels like coming home to a place that’s been waiting for me—vibrant, cultured, and full of promise. It’s more than a destination; it’s the next chapter of my story.`
+      title: "Washington, DC",
+      description: `Washington, DC is where ambition meets purpose. The city’s energy blends history, culture, and innovation in a way that constantly inspires growth. From world-class museums to tech conferences and global organizations, DC offers unmatched opportunities for connection and impact. Every visit feels like a return to where my drive and vision belong.`,
     },
     {
       nav: "/washington-dc/taxes",
       title: "Taxes",
-      description: `Washington, DC has a progressive income tax system with rates ranging from 4% to 10.75%. The city also imposes a sales tax of 6% on most goods and services, with an additional 1% for certain items like restaurant meals and hotel stays. Property taxes in DC are relatively low compared to other major cities, with rates varying based on the property's assessed value and location. Additionally, DC residents are subject to federal taxes, including Social Security and Medicare taxes. Overall, while DC's tax rates are moderate, the city's high cost of living can impact overall affordability for residents.`
+      description: `DC’s tax system is progressive, ranging from roughly 4% to 10.75%, with moderate property and sales taxes compared to other major metros. While residents pay both city and federal taxes, overall rates remain manageable for most professionals. Balanced taxation supports excellent city services, transit, and infrastructure — essential to DC’s thriving urban environment.`,
     },
     {
       nav: "/washington-dc/job-market",
       title: "Job Market",
-      description: `Washington, DC boasts a robust job market driven by its status as the nation's capital. The city is a hub for government agencies, non-profits, international organizations, and lobbying firms, providing ample opportunities in public policy, administration, and advocacy. Additionally, DC has a growing tech sector, with numerous startups and established companies in fields like cybersecurity, software development, and data analysis. The presence of major universities and research institutions also contributes to a dynamic job market. Overall, DC offers diverse career opportunities across various industries, making it an attractive destination for professionals seeking growth and impact.`
+      description: `DC’s job market is one of the most dynamic in the country, offering roles across government, policy, consulting, and technology. Cloud, cybersecurity, and data-focused positions are expanding rapidly as federal agencies modernize and startups grow. The city attracts professionals who value purpose-driven work and opportunities to make national and global impact.`,
     },
     {
       nav: "/washington-dc/salary",
       title: "Salary",
-      description: `The average salary in Washington, DC is approximately $85,000 per year. However, salaries can vary significantly based on factors such as industry, experience level, and job role. For instance, professionals in government or tech sectors may earn higher salaries compared to those in non-profit or service industries. Additionally, the cost of living in DC is relatively high, which can impact overall purchasing power. It's important for individuals considering a move to DC to research specific salary ranges within their field to ensure financial stability in this competitive market.`
+      description: `Average professional salaries in Washington, DC range from $95K to $140K depending on industry and expertise. Cloud and DevOps engineers often see top-tier compensation due to increasing demand for secure, scalable systems. While competitive, these salaries reflect the city’s high-performance culture and the value placed on technical excellence.`,
     },
     {
       nav: "/washington-dc/col",
       title: "Cost of Living",
-      description: `Washington, DC has a high cost of living compared to the national average. Housing is the most significant expense, with median home prices and rental rates well above the national average. Other costs, such as groceries, transportation, and healthcare, are also higher than average. The city's vibrant culture and amenities contribute to its appeal but also drive up expenses. Residents should budget carefully and consider their income relative to living costs when planning to move to or live in Washington, DC.`
+      description: `Washington, DC’s cost of living is among the highest in the country, driven largely by housing and daily expenses. To live comfortably, income levels need to align with the city’s premium pricing across rent, transit, and services. For professionals in tech or federal sectors, strong compensation packages make the tradeoff worthwhile — ensuring access to DC’s vibrant lifestyle and career opportunities.`,
+    },
+    {
+      nav: '/',
+      title: 'Home',
+      description: null
     }
-  ] as DCProps[]
-
+  ]
 
   useEffect(() => {
-    getSalary("Washington, DC")
+    getSalary("Washington, DC", "Cloud Consultant")
     getCostOfLiving("Washington, DC")
   }, [])
 
-const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
+  const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
 
   return (
     <UniversalCard
-    imageSrc={dc}
-    title={currentPage?.title || 'Washington DC'}
-    description={currentPage?.description || "Information not available."}
-      links={pageLocationInfo.map(({ title, nav }) => ({ title, nav }))} 
-
-      />
+      imageSrc={dc}
+      title={currentPage?.title || "Washington, DC"}
+      description={currentPage?.description || "Information not available."}
+      links={pageLocationInfo.map(({ title, nav }) => ({ title, nav }))}
+    />
   )
 }
 

@@ -13,12 +13,12 @@ const TechnicalError: React.FC<FallbackProps> = ({ error }) => {
     { title: "About tRA", nav: "/about" },
     { title: "Raleigh, NC", nav: "/raleigh" },
     { title: "Washington, DC", nav: "/washington-dc" },
-    { title: "Relocation + AI", nav: "/ai" },
+    { title: "Relocation Calculation", nav: "/relo" },
     { title: "Resume", nav: "/resume" },
   ]
 
   const message = error
-    ? "Something went wrong. Please refresh or return to the homepage."
+    ? "Something went very wrong here. Please refresh or return to the homepage."
     : `Looks like you've gotten lost. Yes, I would love to go on vacation too,
        but right now, let's focus on getting to the next city in our
        Cloud Engineering career.`

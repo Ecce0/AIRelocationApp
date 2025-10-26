@@ -1,8 +1,8 @@
 resource "aws_s3_bucket" "frontend" {
-  bucket = "relo-ai-app"
+  bucket = "relo-calc-app"
 
   tags = {
-    Project = "relo-ai-app"
+    Project = "relo-calc-app"
     Env     = "dev"
   }
 }

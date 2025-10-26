@@ -1,4 +1,4 @@
-name: Relo-AI-App CI/CD
+name: Relo-Calc-App CI/CD
 
 on:
   push:
