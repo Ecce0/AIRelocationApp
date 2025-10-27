@@ -1,48 +1,46 @@
-import fetch from 'node-fetch'
 import { cities } from './metroCities.mjs'
 import { getSSMParam } from '../backend/shared/utils.mjs'
 import { saveToCache } from '../backend/shared/dynamoDbCache.mjs'
 
-const delay = (ms) => new Promise((res) => setTimeout(res, ms))
+const wait = (ms) => new Promise(r => setTimeout(r, ms))
 
 const seedCostOfLiving = async () => {
   const apiKey = await getSSMParam('zyla_api_key')
   const apiUrl = await getSSMParam('zyla_api_url')
-  let counter = 0
+  const batchSize = 50
+  const delayCity = 5000
+  const delayBatch = 2 * 60 * 1000
 
-  for (let i = 0; i < cities.length; i++) {
-    const city = cities[i]
-    try {
-      const resp = await fetch(`${apiUrl}?city=${encodeURIComponent(city)}`, {
-        headers: { Authorization: `Bearer ${apiKey}` },
-      })
-
-      if (resp.status === 429) {
-        console.log(`Rate limited on ${city}, backing off...`)
-        await delay(60000)
-        i--
-        continue
+  const processBatch = async (batch, batchIndex) => {
+    for (let i = 0; i < batch.length; i++) {
+      const city = batch[i]
+      try {
+        const res = await fetch(`${apiUrl}?city=${encodeURIComponent(city)}`, {
+          headers: { Authorization: `Bearer ${apiKey}` },
+        })
+        if (!res.ok) throw new Error(`Error ${res.status}: ${await res.text()}`)
+        const data = await res.json()
+        await saveToCache('relo-calc-app-cost-of-living-cache', { city, data })
+        console.log(`✓ ${city}`)
+        if (i < batch.length - 1) await wait(delayCity)
+      } catch (err) {
+        console.error(`❌ ${city}: ${err.message}`)
+        process.exit(1)
       }
-
-      if (!resp.ok)
-        throw new Error(`Error ${resp.status}: ${await resp.text()}`)
-
-      const data = await resp.json()
-      await saveToCache('relo-ai-app-cost-of-living-cache', { city, data })
-      console.log(`Seeded: ${city}`)
-    } catch (err) {
-      console.error(`Failed for ${city}:`, err.message)
     }
-
-    counter++
-    await delay(5000)
-    if (counter % 20 === 0) {
-      console.log('Hourly throttle pause: sleeping 55 minutes...')
-      await delay(55 * 60 * 1000)
-    }
+    if ((batchIndex + 1) * batchSize < cities.length) await wait(delayBatch)
   }
 
-  console.log('Seeding complete')
+  const batches = []
+  for (let i = 0; i < cities.length; i += batchSize)
+    batches.push(cities.slice(i, i + batchSize))
+
+  await Promise.all(
+    batches.map(async (batch, idx) => await processBatch(batch, idx))
+  )
+
+  console.log('✅ Done.')
 }
 
 seedCostOfLiving()
+//Credit to OpenAI 

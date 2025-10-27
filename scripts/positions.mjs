@@ -1,7 +1,7 @@
 export const positions = [
     "Cloud Developer",
     "Cloud Engineer",
-    "Cloud Architect",
+    "Solutions Architect",
     "DevOps Engineer",
     "Site Reliability Engineer",
     "Cloud Security Engineer",
