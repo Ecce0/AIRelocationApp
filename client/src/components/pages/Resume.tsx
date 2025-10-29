@@ -1,81 +1,121 @@
 import { Link, useLocation } from "react-router-dom"
-import skyIsTheLimit from '../../assets/skyIsTheLimit.jpg'
 import UniversalCard from "../utils/UniversalCard"
+import skyIsTheLimit from "../../assets/skyIsTheLimit.jpg"
+
+const ResumeHeader = () => (
+  <div>
+    <h2 className="text-2xl font-bold mb-2">Contact Information</h2>
+    <p>Email: ecollier871@outlook.com</p>
+    <p>
+      <Link to="https://linkedin.com/in/ericacollier" target="_blank" rel="noopener noreferrer" className="link">
+        LinkedIn
+      </Link>
+    </p>
+    <p>
+      <Link to="https://github.com/Ecce0" target="_blank" rel="noopener noreferrer" className="link">
+        Portfolio
+      </Link>
+    </p>
+  </div>
+)
+
+const ResumeSection = ({ title, date, bullets }: { title: string; date: string; bullets: string[] }) => (
+  <div className="mb-4">
+    <h3 className="text-xl font-semibold">{title}</h3>
+    <p className="text-sm italic mb-2">{date}</p>
+    <ul className="list-disc ml-6 space-y-1">
+      {bullets.map((b, i) => (
+        <li key={i}>{b}</li>
+      ))}
+    </ul>
+  </div>
+)
+
+const CertificationsList = ({ items }: { items: string[] }) => (
+  <ul className="list-disc ml-6 space-y-1">
+    {items.map((c, i) => (
+      <li key={i}>{c}</li>
+    ))}
+  </ul>
+)
 
 const Resume = () => {
   const { pathname } = useLocation()
-  
-  const ResumeHeader = () => {
+
+  const sections = [
+    { nav: "/resume", title: "Resume", description: <ResumeHeader /> as unknown as string },
+    {
+      nav: "/resume/objective",
+      title: "Objective",
+      description: `As a forward-thinking Cloud Engineer, my goal is to strengthen my expertise in serverless and DevOps practices while contributing to high-impact cloud platforms. I design scalable, cost-efficient systems. My goal is to eventually progress into a solutions architecture role bridging innovation and business goals.`,
+    },
+    {
+      nav: "/resume/current-position",
+      title: "Current Position",
+      description: (
+        <ResumeSection
+          title="AWS Cloud Engineer"
+          date="Jan 2025 – Present"
+          bullets={[
+            "Design and maintain secure, scalable AWS infrastructures using Lambda, API Gateway, VPC networking, etc.",
+            "Implement observability via CloudWatch, Dynatrace, and Kibana dashboards.",
+            "Build proxy APIs for vendor access to internal systems with OAuth 2.0 and IAM-based security controls.",
+            "Automate infrastructure using Terraform to ensure environment consistency and compliance.",
+          ]}
+        />
+      ) as unknown as string,
+    },
+    {
+      nav: "/resume/positions-held",
+      title: "Positions Held",
+      description: (
+        <ResumeSection
+          title="Software Application Engineer"
+          date="Jan 2021 – Dec 2024"
+          bullets={[
+            "Developed React and Node.js production applications for claims automation and reporting.",
+            "Collaborated with DevOps and QA teams to improve CI/CD delivery and post release monitoring.",
+            "Created automated Jest test suites increasing code coverage and release confidence.",
+            "Enhanced UI performance and accessibility through targeted refactors and code reviews.",
+          ]}
+        />
+      ) as unknown as string,
+    },
+    {
+      nav: "/resume/certifications",
+      title: "Certifications",
+      description: (
+        <CertificationsList
+          items={[
+            "AWS Cloud Practitioner",
+            "Salesforce AI Associate",
+            "Salesforce Administrator",
+            "Salesforce Agentforce"
+          ]}
+        />
+      ) as unknown as string,
+    },
+    {
+      nav: "/resume/education",
+      title: "Education",
+      description: `University of North Carolina at Greensboro — Bachelor of Science in Business Administration, August 2016`,
+    },
+    {
+      nav: '/',
+      title: 'Home',
+      description: null
+    }
+  ]
+
+  const current = sections.find((s) => s.nav === pathname)
+
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-2">Contact Information</h1>
-      <p>Email: ecollier871@outlook.com</p>
-      <p>
-        <Link
-          to="https://linkedin.com/in/ecollier"
-          target="_blank" 
-          rel="noopener noreferrer"
-        
-
-        >
-          LinkedIn
-        </Link>
-      </p>
-      <p>
-        <Link to="/portfolio"
-         target="_blank" 
-         rel="noopener noreferrer">
-          Portfolio
-        </Link>
-      </p>
-    </div>
-  )
-}
-
-  const pageLocationInfo = [
-  {
-    nav: "/resume",
-    title: "Resume",
-    description: <ResumeHeader /> as unknown as string
-  },
-  {
-    nav: "/resume/objective",
-    title: "Objective",
-    description: `As a driven and forward-thinking AWS Cloud Engineer, my objective is to expand my expertise in serverless architectures and multi-cloud integration while contributing to a high-impact engineering team. I aim to design scalable, observable, and cost-efficient systems that improve developer velocity and reliability. My long-term goal is to advance into a senior cloud engineering or solutions architecture role where I can bridge technical innovation and business strategy.`,
-  },
-  {
-    nav: "/resume/current-position",
-    title: "Current Position",
-    description: `I currently serve as an AWS Cloud Engineer, responsible for designing and maintaining secure, scalable, and observable infrastructure. My daily activities include building proxy APIs that allow external users and vendors to access internal company APIs securely. I monitor system health and application performance through AWS CloudWatch, Dynatrace, and Elasticsearch/Kibana to ensure uptime, traceability, and telemetry integrity. I also create and maintain Route53 DNS records, monitor health checks, and work extensively with AWS Lambda, API Gateway, and VPC networking. Using Terraform, I provision and manage cloud resources to maintain infrastructure consistency and compliance across environments.`,
-  },
-  {
-    nav: "/resume/positions-held",
-    title: "Positions Held",
-    description: `Previously, I worked as a Software Application Engineer, developing production-grade web applications that enabled policyholders to report and manage auto accident claims. My work primarily involved React and Node.js within a CI/CD pipeline. I collaborated closely with QA and DevOps teams to deploy new releases, monitor post-production performance, and implement user feedback. I was also responsible for creating and maintaining automated tests using frameworks such as Jest, improving test coverage and release confidence. This experience helped strengthen my understanding of full-stack workflows, RESTful design, and front-end optimization for user-centric products.`,
-  },
-  {
-    nav: "/resume/certifications",
-    title: "Certifications",
-    description: `AWS Certified Cloud Practitioner • Salesforce AI Associate • Salesforce Administrator • Salesforce Agentforce • AWS Certified Solutions Architect (Pending)`,
-  },
-  {
-    nav: "/resume/education",
-    title: "Education",
-    description: `University of North Carolina at Greensboro — Bachelor of Science in Business Administration, August 2016`,
-  },
-]
-
-const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
-
-
-  return (
-<UniversalCard
-    imageSrc={skyIsTheLimit}
-    title={currentPage?.title || 'Washington DC'}
-    description={currentPage?.description || "Information not available."}
-      links={pageLocationInfo.map(({ title, nav }) => ({ title, nav }))} 
-
-      />
+    <UniversalCard
+      imageSrc={skyIsTheLimit}
+      title={current?.title || "Resume"}
+      description={current?.description || "Information not available."}
+      links={sections.map(({ title, nav }) => ({ title, nav }))}
+    />
   )
 }
 

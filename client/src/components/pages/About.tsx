@@ -19,9 +19,9 @@ const About = () => {
         <>
           The Relocation-Calculation App (tRCA) was built to simplify one of the hardest
           questions in career planning — “Can I afford to live there?”
-          As a cloud engineer preparing for a move to the DMV, I wanted
+          As a cloud engineer with a desire to move to the DMV, I wanted
           a clear, data-driven way to compare salaries and living costs
-          across cities. The app transforms that research process into
+          across cities. This app transforms that research process into
           clarity and confidence.
         </>
       ),
@@ -31,7 +31,7 @@ const About = () => {
       title: "How Does It Work?",
       description: (
         <>
-          tRCA pulls live salary data from{" "}
+          tRCA previously used a lambda (salary) to pull live salary data from{" "}
           <a
             href="https://www.openwebninja.com/"
             target="_blank"
@@ -40,16 +40,21 @@ const About = () => {
           >
             OpenWebNinja
           </a>{" "}
-          and cost-of-living data from{" "}
+          and another lambda (col) to pull cost-of-living data from{" "}
           <a
             href="https://zylalabs.com/"
             target="_blank"
             rel="noopener noreferrer"
             className="link"
           >
-            Zyla Labs
+            Zyla Labs. 
           </a>
-          . It maps eight cloud roles — Cloud Engineer,
+          {" "}Unfortunately, I was unable to obtain a substantial amount of data from one of the API's. So I utilized OpenAI's
+          ChatGPT to calculate average salaries from various public resources across the web.
+          . 
+          <br/>
+          <br/>
+          It maps eight cloud roles — Cloud Engineer,
           Cloud Developer, SRE, Cloud Architect, DevOps Engineer, Cloud Security Engineer, Cloud Solutions Architect,
           Cloud Consultant — across five professional levels modeled
           after{" "}
