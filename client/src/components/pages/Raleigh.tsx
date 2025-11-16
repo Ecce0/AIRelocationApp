@@ -11,7 +11,7 @@ interface RaleighProps {
 }
 
 const Raleigh = () => {
-  const { getSalary, getCostOfLiving } = useAppContext()
+  const { getMetrics } = useAppContext()
   const { pathname } = useLocation()
 
   const pageLocationInfo: RaleighProps[] = [
@@ -51,8 +51,7 @@ const Raleigh = () => {
   const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
 
   useEffect(() => {
-    getSalary("Raleigh, NC", "Cloud Engineer")
-    getCostOfLiving("Raleigh, NC")
+    getMetrics('Raleigh', 'Cloud Engineer')
   }, [])
 
   return (

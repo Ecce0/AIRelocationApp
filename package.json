@@ -24,6 +24,7 @@
     "@aws-sdk/client-sts": "^3.899.0",
     "@aws-sdk/credential-provider-ini": "^3.899.0",
     "@aws-sdk/credential-providers": "^3.899.0",
+    "@aws-sdk/util-dynamodb": "^3.919.0",
     "@tailwindcss/vite": "^4.1.14",
     "axios": "^1.12.2",
     "daisyui": "^5.3.7",

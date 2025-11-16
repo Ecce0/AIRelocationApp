@@ -44,8 +44,6 @@ resource "aws_lambda_function" "cost_of_living" {
 
   environment {
     variables = {
-      ZYLA_KEY = "zyla_api_key"
-      ZYLA_URL = "zyla_api_url"
       CACHE_TABLE = aws_dynamodb_table.cost_of_living_cache.name
     }
   }
@@ -69,8 +67,6 @@ resource "aws_lambda_function" "salary" {
 
   environment {
     variables = {
-      OPENWEBNINJA_KEY = "openwebninja_api_key"
-      OPENWEBNINJA_URL = "openwebninja_api_url"
       CACHE_TABLE = aws_dynamodb_table.job_salaries.name
     }
   }

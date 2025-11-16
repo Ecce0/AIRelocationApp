@@ -1,43 +1,72 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb'
-import { GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb'
+import { DynamoDBClient, GetItemCommand, PutItemCommand } from '@aws-sdk/client-dynamodb'
+import { marshall } from "@aws-sdk/util-dynamodb"
 
 const client = new DynamoDBClient({})
 
-/**
- * Get an item from DynamoDB cache
- * @param {string} tableName - DynamoDB table name
- * @param {object} key - Primary key object { pkName: pkValue, skName?: skValue }
- */
-
 export const getFromCache = async (tableName, key) => {
-  const command = new GetItemCommand({
-    TableName: tableName,
-    Key: Object.fromEntries(Object.entries(key).map(([k, v]) => [k, { S: v }])),
-  })
+  try {
+    if (!key || !key.city) {
+      console.error('Missing key.city', { tableName, key })
+      return null
+    }
 
-  const result = await client.send(command)
-  return result.Item ? unmarshall(result.Item) : null
+    let Key
+    if (tableName.includes('job_salaries')) {
+      if (!key.job) {
+        console.error('Missing key.job for job_salaries', { key })
+        return null
+      }
+
+      // Normalize city (strip ", ST" if present)
+      const cityOnly = key.city.split(',')[0].trim()
+      Key = { job: { S: key.job }, city: { S: cityOnly } }
+    } else {
+      Key = { city: { S: key.city } }
+    }
+
+    const command = new GetItemCommand({ TableName: tableName, Key })
+    const result = await client.send(command)
+
+    console.log(
+      '📦 DynamoDB getFromCache result:',
+      tableName,
+      Key,
+      result.Item ? 'Found' : 'Not Found'
+    )
+
+    if (!result.Item) return null
+
+    const unmarshalled = unmarshall(result.Item)
+
+    if (unmarshalled.data && typeof unmarshalled.data === 'string' && unmarshalled.data.startsWith('{')) {
+      try {
+        unmarshalled.data = JSON.parse(unmarshalled.data)
+      } catch {
+        console.warn('Failed to parse JSON from data field')
+      }
+    }
+
+    return unmarshalled
+  } catch (err) {
+    console.error('getFromCache error:', err)
+    return null
+  }
 }
 
-/**
- * Save an item into DynamoDB cache
- * @param {string} tableName
- * @param {object} item - Item to store
- */
 export const saveToCache = async (tableName, item) => {
-  const marshalled = Object.fromEntries(
-    Object.entries(item).map(([k, v]) => [k, { S: String(v) }]),
+  const sanitized = Object.fromEntries(
+    Object.entries(item).map(([k, v]) => [
+      k,
+      typeof v === "object" ? JSON.stringify(v) : v,
+    ])
   )
-
   const command = new PutItemCommand({
     TableName: tableName,
-    Item: marshalled,
+    Item: marshall(sanitized),
   })
-
   await client.send(command)
 }
 
-// Helper: DynamoDB unmarshall (simple string-only for now)
-const unmarshall = (item) => {
-  return Object.fromEntries(Object.entries(item).map(([k, v]) => [k, v.S]))
-}
+
+const unmarshall = (item) =>
+  Object.fromEntries(Object.entries(item).map(([k, v]) => [k, v.S]))

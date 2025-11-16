@@ -9,21 +9,23 @@ const api = axios.create({
   },
 })
 
-export const fetchMetrics = async () => {
-  const res = await api.get("/metrics")
-  return res.data
-}
+// export const fetchSalary = async (city: string, job: string) => {
+//   const res = await api.get(`/salary`, {
+//     params: { city, job },
+//   })
+//   return res.data
+// }
 
-export const fetchSalary = async (city: string, job: string) => {
-  const res = await api.get(`/salary`, {
-    params: { city, job },
-  })
-  return res.data
-}
+// export const fetchCostOfLiving = async (city: string) => {
+//   const res = await api.get(`/col`, {
+//     params: { city },
+//   })
+//   return res.data
+// }
 
-export const fetchCostOfLiving = async (city: string) => {
-  const res = await api.get(`/col`, {
-    params: { city },
+export const fetchMetrics = async (city: string, job: string) => {
+  const res = await api.get(`/metrics`, {
+    params: { city, job }
   })
   return res.data
 }
