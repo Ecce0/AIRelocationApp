@@ -65,7 +65,7 @@ Relo.Calc.App is built with a **fully serverless AWS stack**, separating concern
 | **Database / Storage** | DynamoDB, SSM Parameter Store, S3 |
 | **Infrastructure / IaC** | Terraform, AWS CLI, IAM Roles/Policies |
 | **External APIs** | Previously used OpenWebNinja (Salary), Zyla Labs (Cost of Living) |
-| **Version Control / CI** | GitHub Actions, GitHub Workflows |
+| **Source Control / CI** | GitHub Actions, GitHub Workflows |
 | **Obersvability** | AWS Cloudwatch |
 
 ---
