@@ -15,14 +15,14 @@ Relo.Calc.App is a full-stack **serverless relocation insights platform** that c
 
 ---
 
-##Background
+## Background
 
 This project began as **Relo.AI.App**, originally envisioned to include **Amazon SageMaker** for AI-driven relocation predictions. Over time, the focus shifted toward **cloud engineering and serverless architecture**, emphasizing **scalability & automation** rather than machine learning.  
 That evolution inspired the new name — **Relo.Calc.App** — reflecting its focus on **cloud-based computation** instead of AI integration.
 
 ---
 
-##Architecture Overview
+## Architecture Overview
 
 Relo.Calc.App is built with a **fully serverless AWS stack**, separating concerns across networking, compute, and data layers.
 
@@ -46,7 +46,7 @@ Relo.Calc.App is built with a **fully serverless AWS stack**, separating concern
 
 ---
 
-## 💡 Features
+## Features
 
 - Compares salaries across 200+ U.S. metro areas  
 - Adjusts for cost of living to calculate affordability  
