@@ -47,49 +47,6 @@ resource "aws_lambda_permission" "ping_permission" {
   source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
 }
 
-## ===== SALARY ========
-resource "aws_apigatewayv2_integration" "salary_integration" {
-  api_id             = aws_apigatewayv2_api.relo_app_api.id
-  integration_type   = "AWS_PROXY"
-  integration_uri    = aws_lambda_function.salary.arn
-  integration_method = "POST"
-}
-
-resource "aws_apigatewayv2_route" "salary_route" {
-  api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "GET /salary"
-  target    = "integrations/${aws_apigatewayv2_integration.salary_integration.id}"
-}
-
-resource "aws_lambda_permission" "salary_permission" {
-  statement_id  = "AllowAPIGatewayInvokeSalary"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.salary.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
-}
-
-## ===== COST OF LIVING ========
-resource "aws_apigatewayv2_integration" "col_integration" {
-  api_id             = aws_apigatewayv2_api.relo_app_api.id
-  integration_type   = "AWS_PROXY"
-  integration_uri    = aws_lambda_function.cost_of_living.arn
-  integration_method = "POST"
-}
-
-resource "aws_apigatewayv2_route" "col_route" {
-  api_id    = aws_apigatewayv2_api.relo_app_api.id
-  route_key = "GET /col"
-  target    = "integrations/${aws_apigatewayv2_integration.col_integration.id}"
-}
-
-resource "aws_lambda_permission" "col_permission" {
-  statement_id  = "AllowAPIGatewayInvokeCOL"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.cost_of_living.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_apigatewayv2_api.relo_app_api.execution_arn}/*/*"
-}
 
 ## ===== METRICS ========
 resource "aws_apigatewayv2_integration" "metrics_integration" {

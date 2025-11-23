@@ -26,51 +26,6 @@ resource "aws_lambda_function" "ping" {
   }
 }
 
-// === Cost of Living Lambda ===
-data "archive_file" "col_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/../dist/cost_of_living"
-  output_path = "${path.module}/../dist/cost_of_living.zip"
-}
-
-resource "aws_lambda_function" "cost_of_living" {
-  function_name    = "relo-calc-app-cost-of-living"
-  role             = aws_iam_role.lambda_role_auth.arn
-  runtime          = "nodejs22.x"
-  handler          = "handler.default"
-  filename         = data.archive_file.col_zip.output_path
-  source_code_hash = data.archive_file.col_zip.output_base64sha256
-  timeout          = 30
-
-  environment {
-    variables = {
-      CACHE_TABLE = aws_dynamodb_table.cost_of_living_cache.name
-    }
-  }
-}
-
-// === Salary Lambda ===
-data "archive_file" "salary_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/../dist/salary"
-  output_path = "${path.module}/../dist/salary.zip"
-}
-
-resource "aws_lambda_function" "salary" {
-  function_name    = "relo-calc-app-salary"
-  role             = aws_iam_role.lambda_role_auth.arn
-  runtime          = "nodejs22.x"
-  handler          = "handler.default"
-  timeout          = 30
-  filename         = data.archive_file.salary_zip.output_path
-  source_code_hash = data.archive_file.salary_zip.output_base64sha256
-
-  environment {
-    variables = {
-      CACHE_TABLE = aws_dynamodb_table.job_salaries.name
-    }
-  }
-}
 
 // === Metrics Lambda ===
 data "archive_file" "metrics_zip" {
@@ -96,7 +51,7 @@ resource "aws_lambda_function" "metrics" {
   }
 }
 
-// === Auth Lambda ===
+// === Auth Lambda (save for later)===
 data "archive_file" "auth_zip" {
   type        = "zip"
   source_dir  = "${path.module}/../backend/shared/auth"
