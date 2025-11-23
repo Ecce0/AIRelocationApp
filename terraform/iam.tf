@@ -38,6 +38,40 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
   }
 
   statement {
+    sid    = "JobSalariesAccess"
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:Query",
+      "dynamodb:Scan"
+    ]
+    resources = [
+      aws_dynamodb_table.job_salaries.arn,
+      "${aws_dynamodb_table.job_salaries.arn}/index/*"
+    ]
+  }
+
+  statement {
+    sid    = "CostOfLivingCacheAccess"
+    effect = "Allow"
+    actions = [
+      "dynamodb:GetItem",
+      "dynamodb:PutItem",
+      "dynamodb:UpdateItem",
+      "dynamodb:DeleteItem",
+      "dynamodb:Query",
+      "dynamodb:Scan"
+    ]
+    resources = [
+      aws_dynamodb_table.cost_of_living_cache.arn,
+      "${aws_dynamodb_table.cost_of_living_cache.arn}/index/*"
+    ]
+  }
+
+  statement {
     sid    = "ReloCaclAppCacheAccess"
     effect = "Allow"
     actions = [
