@@ -27,7 +27,7 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
       "dynamodb:GetItem",
       "dynamodb:PutItem",
       "dynamodb:UpdateItem",
-      "dynamodb:DeleteItem",
+      //"dynamodb:DeleteItem", ..Commenting out delete to prevent accidental deletions
       "dynamodb:Query",
       "dynamodb:Scan"
     ]
@@ -37,55 +37,6 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
     ]
   }
 
-  statement {
-    sid    = "JobSalariesAccess"
-    effect = "Allow"
-    actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:DeleteItem",
-      "dynamodb:Query",
-      "dynamodb:Scan"
-    ]
-    resources = [
-      aws_dynamodb_table.job_salaries.arn,
-      "${aws_dynamodb_table.job_salaries.arn}/index/*"
-    ]
-  }
-
-  statement {
-    sid    = "CostOfLivingCacheAccess"
-    effect = "Allow"
-    actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:DeleteItem",
-      "dynamodb:Query",
-      "dynamodb:Scan"
-    ]
-    resources = [
-      aws_dynamodb_table.cost_of_living_cache.arn,
-      "${aws_dynamodb_table.cost_of_living_cache.arn}/index/*"
-    ]
-  }
-
-  statement {
-    sid    = "ReloCaclAppCacheAccess"
-    effect = "Allow"
-    actions = [
-      "dynamodb:GetItem",
-      "dynamodb:PutItem",
-      "dynamodb:UpdateItem",
-      "dynamodb:Query",
-      "dynamodb:Scan"
-    ]
-    resources = [
-      aws_dynamodb_table.relo_calc_app_cache.arn,
-      "${aws_dynamodb_table.relo_calc_app_cache.arn}/index/*"
-    ]
-  }
 
   statement {
   sid    = "RelocationSalariesAccess"

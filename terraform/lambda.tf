@@ -45,8 +45,8 @@ resource "aws_lambda_function" "metrics" {
 
   environment {
     variables = {
-      COL_TABLE    = aws_dynamodb_table.cost_of_living_cache.name
-      SALARY_TABLE = aws_dynamodb_table.job_salaries.name
+      COL_TABLE    = aws_dynamodb_table.relocation_col.name
+      SALARY_TABLE = aws_dynamodb_table.relocation_salaries.name
     }
   }
 }
