@@ -55,7 +55,7 @@ const About = () => {
           <br/>
           <br/>
           It maps eight cloud roles — Cloud Engineer,
-          Cloud Developer, SRE, Cloud Architect, DevOps Engineer, Cloud Security Engineer, Cloud Solutions Architect,
+          Cloud Developer, SRE, Cloud Architect, DevOps Engineer, Cloud Security Engineer
           Cloud Consultant — across five professional levels modeled
           after{" "}
           <a

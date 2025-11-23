@@ -1,5 +1,5 @@
-import { useState, type ChangeEvent } from "react"
 import relo from "../../../assets/relo.jpg"
+import { useState, type ChangeEvent } from "react"
 import { useAppContext } from "../../../context/Context"
 import { cities } from "../../../../cities"
 import ReloResults from "./ReloResults"
@@ -94,8 +94,9 @@ const ReloMain = () => {
     }
     try {
       setCardLoading(true)
-      const res = await getMetrics(targetCity, position)
-      setMetrics(res)
+      const res = await getMetrics(targetCity, position, profLevel)
+      console.log(res)
+      setMetrics(null)
       setCCResponse("metrics_loaded")
     } catch (err) {
       console.error(err)

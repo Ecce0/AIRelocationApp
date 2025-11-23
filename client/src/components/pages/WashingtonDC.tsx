@@ -11,7 +11,6 @@ interface DCProps {
 }
 
 const WashingtonDC = () => {
-  const { getSalary, getCostOfLiving } = useAppContext()
   const { pathname } = useLocation()
 
   const pageLocationInfo: DCProps[] = [
@@ -46,11 +45,6 @@ const WashingtonDC = () => {
       description: null
     }
   ]
-
-  useEffect(() => {
-    getSalary("Washington, DC", "Cloud Consultant")
-    getCostOfLiving("Washington, DC")
-  }, [])
 
   const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
 

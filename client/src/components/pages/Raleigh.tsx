@@ -1,6 +1,4 @@
-import { useEffect } from "react"
 import { useLocation } from "react-router-dom"
-import { useAppContext } from "../../context/Context"
 import UniversalCard from "../utils/UniversalCard"
 import rdu from "../../assets/rdu.jpg"
 
@@ -11,7 +9,6 @@ interface RaleighProps {
 }
 
 const Raleigh = () => {
-  const { getMetrics } = useAppContext()
   const { pathname } = useLocation()
 
   const pageLocationInfo: RaleighProps[] = [
@@ -49,10 +46,6 @@ const Raleigh = () => {
 
 
   const currentPage = pageLocationInfo.find((page) => page.nav === pathname)
-
-  useEffect(() => {
-    getMetrics('Raleigh', 'Cloud Engineer')
-  }, [])
 
   return (
     <UniversalCard

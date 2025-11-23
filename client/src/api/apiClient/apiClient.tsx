@@ -10,10 +10,12 @@ const api = axios.create({
 })
 
 
-export const fetchMetrics = async (city: string, job: string, level: string = 'II') => {
-  const res = await api.get(`/metrics`, {
-    params: { city, job, level }
+export const fetchMetrics = async (city: string, job: string, level: string ) => {
+  const cityName = city.split(',')[0].trim()
+  const res = await api.get('/metrics', {
+    params: { city: cityName, job, level }
   })
+  console.log("API Response:", res)
   return res.data
 }
 

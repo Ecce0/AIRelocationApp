@@ -43,7 +43,7 @@ const Resume = () => {
   const { pathname } = useLocation()
 
   const sections = [
-    { nav: "/resume", title: "Resume", description: <ResumeHeader /> as unknown as string },
+    { nav: "/resume", title: "Resume", description: <ResumeHeader /> },
     {
       nav: "/resume/objective",
       title: "Objective",

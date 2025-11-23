@@ -3,9 +3,9 @@ import { getFromCache } from '../shared/dynamoDbCache.mjs'
 const handler = async (event) => {
   try {
     const { city, job, level } = event.queryStringParameters || {}
-    const cityValue = city || 'Washington, DC'
-    const jobBase = job || 'Cloud Engineer'
-    const levelValue = level || 'II'
+    const cityValue = city 
+    const jobBase = job 
+    const levelValue = level
 
     const colTable = process.env.COL_TABLE
     const salaryTable = process.env.SALARY_TABLE

@@ -18,7 +18,7 @@ resource "aws_iam_role" "lambda_role_auth" {
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
 }
 
-# ===== Policy Document: DynamoDB + SSM =====
+# ===== Policy Document: DynamoDB =====
 data "aws_iam_policy_document" "lambda_dynamodb" {
   statement {
     sid    = "RelocationMetricsAccess"
@@ -78,7 +78,6 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
       "dynamodb:GetItem",
       "dynamodb:PutItem",
       "dynamodb:UpdateItem",
-      "dynamodb:DeleteItem",
       "dynamodb:Query",
       "dynamodb:Scan"
     ]
@@ -87,6 +86,35 @@ data "aws_iam_policy_document" "lambda_dynamodb" {
       "${aws_dynamodb_table.relo_calc_app_cache.arn}/index/*"
     ]
   }
+
+  statement {
+  sid    = "RelocationSalariesAccess"
+  effect = "Allow"
+  actions = [
+    "dynamodb:GetItem",
+    "dynamodb:Query",
+    "dynamodb:Scan"
+  ]
+  resources = [
+    aws_dynamodb_table.relocation_salaries.arn,
+    "${aws_dynamodb_table.relocation_salaries.arn}/index/*"
+  ]
+}
+
+
+statement {
+  sid    = "RelocationColAccess"
+  effect = "Allow"
+  actions = [
+    "dynamodb:GetItem",
+    "dynamodb:Query",
+    "dynamodb:Scan"
+  ]
+  resources = [
+    aws_dynamodb_table.relocation_col.arn,
+    "${aws_dynamodb_table.relocation_col.arn}/index/*"
+  ]
+}
 }
 
 # ===== Create the IAM Policy =====

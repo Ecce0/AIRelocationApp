@@ -11,9 +11,9 @@ export const getFromCache = async (tableName, key) => {
     }
 
     let Key
-    if (tableName.includes('job_salaries')) {
+    if (tableName.includes('salaries')) {
       if (!key.job) {
-        console.error('Missing key.job for job_salaries', { key })
+        console.error('Missing key.job for relocation_salaries', { key })
         return null
       }
 
@@ -28,7 +28,7 @@ export const getFromCache = async (tableName, key) => {
     const result = await client.send(command)
 
     console.log(
-      '📦 DynamoDB getFromCache result:',
+      'DynamoDB getFromCache result:',
       tableName,
       Key,
       result.Item ? 'Found' : 'Not Found'

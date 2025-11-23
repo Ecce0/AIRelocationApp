@@ -66,7 +66,6 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
     "DevOps Engineer",
     "Site Reliability Engineer",
     "Cloud Security Engineer",
-    "Cloud Solutions Architect",
     "Cloud Consultant"
   ]
   
@@ -90,7 +89,7 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
   ): Promise<MetricsRecord | null> => {
     const cityToUse = cityParam ?? currentCity
     const jobToUse = jobParam ?? position
-    const levelToUse = levelParam ?? profLevel ?? 'II'
+    const levelToUse = levelParam ?? profLevel 
     
     if (!cityToUse || !jobToUse) {
       console.warn("getMetrics called without city or job")
