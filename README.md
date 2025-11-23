@@ -1,18 +1,28 @@
 # RelocationCalculationApp
 # ☁️ Relo.Calc.App
 
+## Project Overview
+
+This repository contains the technical implementation of the AI Relocation App.
+
+Click here for the **[Product Documentation](https://github.com/Ecce0/AIRelocationApp/wiki)** - Product vision, strategy, customer personas, and product management artifacts
+
+Click here for the **[Project Board](https://github.com/users/Ecce0/projects/3)** - Active backlog and sprint planning
+
+---
+
 Relo.Calc.App is a full-stack **serverless relocation insights platform** that compares salaries, cost-of-living data, and affordability metrics across U.S. cities. It helps users evaluate where their careers and finances can go further — all powered by real-time cloud data. 
 
 ---
 
-## 📖 Background
+## Background
 
 This project began as **Relo.AI.App**, originally envisioned to include **Amazon SageMaker** for AI-driven relocation predictions. Over time, the focus shifted toward **cloud engineering and serverless architecture**, emphasizing **scalability & automation** rather than machine learning.  
 That evolution inspired the new name — **Relo.Calc.App** — reflecting its focus on **cloud-based computation** instead of AI integration.
 
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 Relo.Calc.App is built with a **fully serverless AWS stack**, separating concerns across networking, compute, and data layers.
 
@@ -36,7 +46,7 @@ Relo.Calc.App is built with a **fully serverless AWS stack**, separating concern
 
 ---
 
-## 💡 Features
+## Features
 
 - Compares salaries across 200+ U.S. metro areas  
 - Adjusts for cost of living to calculate affordability  
@@ -55,7 +65,7 @@ Relo.Calc.App is built with a **fully serverless AWS stack**, separating concern
 | **Database / Storage** | DynamoDB, SSM Parameter Store, S3 |
 | **Infrastructure / IaC** | Terraform, AWS CLI, IAM Roles/Policies |
 | **External APIs** | Previously used OpenWebNinja (Salary), Zyla Labs (Cost of Living) |
-| **Version Control / CI** | GitHub Actions, GitHub Workflows |
+| **Source Control / CI** | GitHub Actions, GitHub Workflows |
 | **Obersvability** | AWS Cloudwatch |
 
 ---
